@@ -1,0 +1,18 @@
+.region-articles-container {
+    background-color: #f0f0f0;
+    padding: 2rem;
+  }
+  
+  .article-card {
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .article-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .badge {
+    font-size: 0.75rem;
+  }
+  

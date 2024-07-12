@@ -7,14 +7,22 @@ import './RegionArticles.css';
 const genres = ['All', 'AI', 'BlockChain', 'Cybersecurity', 'IoT' , 'Energy' , 'Millitary'];
 
 function RegionArticles() {
+
+  const today = new Date();
+  const weekNumber = today.toLocaleDateString('en-US', { week: 'numeric' });
+  const monthString = today.toLocaleDateString('en-US', { month: 'long' });
+  const year = today.getFullYear();
+
   var [articles, setArticles] = useState([]);
   const { region } = useParams();
   const [showModal, setShowModal] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState('Select Period');
+  const [selectedPeriod, setSelectedPeriod] = useState(`${monthString} ${year}, Week ${Math.ceil(today.getDate() / 7)}`);
   const [activeGenre, setActiveGenre] = useState('All');
 
-  const [selectedWeek, setSelectedWeek] = useState(1);
-  const [selectedMonth, setSelectedMonth] = useState('January');
+  console.log(selectedPeriod)
+
+  const [selectedWeek, setSelectedWeek] = useState(Math.ceil(today.getDate() / 7));
+  const [selectedMonth, setSelectedMonth] = useState(monthString);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const handleShowModal = () => setShowModal(true);
@@ -44,7 +52,7 @@ function RegionArticles() {
 
   const filteredArticles = articles.filter(article => {
     const articleDate = new Date(article.date);
-    const isActiveGenre = activeGenre === 'All' || article.tags.includes(activeGenre);
+    const isActiveGenre = activeGenre === 'All' || article.tag.includes(activeGenre);
     const isInSelectedPeriod = articleDate.getFullYear() === selectedYear && 
                                articleDate.toLocaleString('default', { month: 'long' }) === selectedMonth && 
                                Math.ceil(articleDate.getDate() / 7) === selectedWeek;
@@ -53,7 +61,7 @@ function RegionArticles() {
   });
 
   
-  articles = articles.filter(article => article.region === region);
+  articles = filteredArticles.filter(article => article.region === region);
   console.log(articles)
 
   return (

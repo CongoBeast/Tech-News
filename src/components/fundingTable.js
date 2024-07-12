@@ -19,6 +19,7 @@ function FundingTable({ rows }) {
             <th scope="col" className="text-right">Size ($)</th>
             <th scope="col" className="text-right">Region</th>
             <th scope="col" className="text-right">Tag</th>
+            <th scope="col" className="text-right">Date</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@ function FundingTable({ rows }) {
               <td className="text-right">{row.size}</td>
               <td className="text-right">{row.region}</td>
               <td className="text-right">{row.tag}</td>
+              <td className="text-right">{row.date}</td>
             </tr>
           ))}
         </tbody>

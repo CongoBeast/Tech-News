@@ -7,7 +7,7 @@ import { FaPaste } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 
 const regions = ['africa', 'asia', 'america', 'europe', 'middleeast'];
-const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles'];
+const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles' , 'FinTech' , 'BioTech' , 'Agric'];
 
 function LoadingOverlay({ message }) {
   return (

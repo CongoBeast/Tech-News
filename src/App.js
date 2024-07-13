@@ -10,6 +10,7 @@ import Home from './components/Home';
 import Admin from './components/Admin';
 import Funding from './components/Funding';
 import StartupCard from './components/startupCard';
+import FundingAnalysis from './components/FundingAnalysis';
 import ArticleEntry from './components/ArticleEntry';
 import FundingEntry from './components/fundingEntry'; // Import the ArticleEntry component
 import RegionArticles from './components/RegionArticles';
@@ -29,6 +30,7 @@ function App() {
             <Route path="/region" element={<Region />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/funding" element={<Funding />} />
+            <Route path="/fundinganalysis" element={<FundingAnalysis />} />
             <Route path="/startup/:name" element={<StartupCard />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/article-entry" element={<ArticleEntry />} />

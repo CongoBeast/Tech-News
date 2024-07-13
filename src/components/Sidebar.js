@@ -26,7 +26,8 @@ function Sidebar() {
       <Navbar.Brand as={Link} to="/">
         <img src="https://github.com/CongoBeast/Tech-News/blob/master/src/components/tech-week.png?raw=true" 
         alt="Imat Tech Logo"
-          style={{ maxHeight: "150px", maxWidth: "auto", marginBottom: "20px" }}
+          style={{ maxHeight: "100px", maxWidth: "100px", marginBottom: "10px" }}
+          className="d-flex align-items-center"
         />
       </Navbar.Brand>
 

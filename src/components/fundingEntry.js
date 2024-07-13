@@ -118,7 +118,7 @@ function FundingEntry() {
       <h2 className="my-4">Enter Funding News</h2>
       <Form onSubmit={handleSubmit}>
         <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="_id" className="mb-3">
               <Form.Label>ID</Form.Label>
               <Form.Control
@@ -129,7 +129,7 @@ function FundingEntry() {
               />
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="startupName" className="mb-3">
               <Form.Label>Startup Name</Form.Label>
               <Form.Control
@@ -140,10 +140,8 @@ function FundingEntry() {
               />
             </Form.Group>
           </Col>
-        </Row>
 
-        <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="type" className="mb-3">
               <Form.Label>Type</Form.Label>
               <Form.Control
@@ -154,6 +152,10 @@ function FundingEntry() {
               />
             </Form.Group>
           </Col>
+
+        </Row>
+
+        <Row>
           <Col md={6}>
             <Form.Group controlId="size" className="mb-3">
               <Form.Label>Size ($)</Form.Label>
@@ -168,7 +170,7 @@ function FundingEntry() {
         </Row>
 
         <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="region" className="mb-3">
               <Form.Label>Region</Form.Label>
               <Form.Control
@@ -184,7 +186,7 @@ function FundingEntry() {
               </Form.Control>
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="tag" className="mb-3">
               <Form.Label>Tag</Form.Label>
               <Form.Control
@@ -200,10 +202,23 @@ function FundingEntry() {
               </Form.Control>
             </Form.Group>
           </Col>
+          
+          <Col md={4}>
+            <Form.Group controlId="date" className="mb-3">
+              <Form.Label>Date</Form.Label>
+              <Form.Control
+                type="date"
+                name="date"
+                value={fundingData.date}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+
         </Row>
 
         <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="imageLink" className="mb-3">
               <Form.Label>Image Link</Form.Label>
               <div className="d-flex">
@@ -219,7 +234,7 @@ function FundingEntry() {
               </div>
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="siteLink" className="mb-3">
               <Form.Label>Site Link</Form.Label>
               <div className="d-flex">
@@ -235,10 +250,8 @@ function FundingEntry() {
               </div>
             </Form.Group>
           </Col>
-        </Row>
 
-        <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="careersLink" className="mb-3">
               <Form.Label>Careers Link</Form.Label>
               <div className="d-flex">
@@ -254,17 +267,11 @@ function FundingEntry() {
               </div>
             </Form.Group>
           </Col>
-          <Col md={6}>
-            <Form.Group controlId="date" className="mb-3">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="date"
-                value={fundingData.date}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Col>
+        </Row>
+
+        <Row>
+          
+ 
         </Row>
 
         <Row>

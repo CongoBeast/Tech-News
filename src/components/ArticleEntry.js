@@ -264,14 +264,7 @@ function ArticleEntry() {
         </Row>
       </Form>
       <ToastContainer />
-      <Row className="mt-4">
-        <Col>
-          <h4>Stats</h4>
-          <p>Number of Posts: {stats.numberOfPosts}</p>
-          <p>Number of Drafts: {stats.numberOfDrafts}</p>
-          <p>Number of Posts This Week: {stats.numberOfPostsThisWeek}</p>
-        </Col>
-      </Row>
+      
     </Container>
   );
 }

@@ -17,7 +17,7 @@ function StartupCard() {
       <div className="card mb-3" style={{ borderRadius: '15px', overflow: 'hidden' }}>
         <div className="row no-gutters">
           <div className="col-md-4">
-            <img src={startup.imageLink} className="card-img" alt="founder" style={{ borderRadius: '15px 0 0 15px', height: '100%' }} />
+            <img src={startup.imageLink} className="card-img aspect-ratio" alt="founder" style={{ borderRadius: '15px 0 0 15px', height: '100%' }} />
           </div>
           <div className="col-md-8">
             <div className="card-body">

@@ -13,10 +13,13 @@ function Admin() {
     numberOfDrafts: 0,
     numberOfPostsThisWeek: 0
   });
+
+  const [funding , setFunding] = useState();
   
   
   useEffect(() => {
     fetchStats();
+    fetchFunding();
   }, []);
   
   const fetchStats = () => {
@@ -29,11 +32,23 @@ function Admin() {
       });
   };
 
+  const fetchFunding = () => {
+    axios.get('http://localhost:3001/funding-news')
+      .then(response => {
+        setFunding(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching stats:', error);
+      });
+  };
+
+  console.log()
+
   const metrics = [
   { label: 'Number of Posts', value: stats.numberOfPosts },
   { label: 'Number of Drafts', value: stats.numberOfDrafts },
   { label: 'Posts this week', value: stats.numberOfPostsThisWeek },
-  { label: 'Other Metric', value: 7 },
+  { label: 'Funding Posts', value: 25 },
 ];
 
   return (

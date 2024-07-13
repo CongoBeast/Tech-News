@@ -62,7 +62,7 @@ function RegionArticles() {
 
   
   articles = filteredArticles.filter(article => article.region === region);
-  console.log(articles)
+  // console.log(articles)
 
   return (
     <Container fluid className="region-articles-container">

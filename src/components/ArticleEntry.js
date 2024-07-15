@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaPaste } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
@@ -134,6 +134,16 @@ function ArticleEntry() {
     <Container>
       {loading && <LoadingOverlay message={loadingMessage} />}
       <h2 className="my-4">Enter New Article</h2>
+
+      <Button
+        as={Link}
+        to="/articles-pages"
+        className="btn btn-primary my-4"
+        style={{ marginRight: "1rem" }}
+      >
+        View and Edit Articles
+      </Button>
+
       <Form>
         <Row>
           <Col md={4}>

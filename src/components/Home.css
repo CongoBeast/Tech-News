@@ -15,16 +15,39 @@ body {
 }
 
 .continent-card {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
   transition: box-shadow 0.3s ease-in-out;
   cursor: pointer;
   border: none;
+  color: #fff
+}
+
+.continent-card .card-img {
+  opacity: 0.8;
+}
+
+.continent-card .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .continent-card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #2575fc , #6a11cb);
+  transition: 0.3s ease-in-out;
 }
 
 h2 {
   color: #333;
   font-weight: 600;
 }
+
+.gradient-button {
+  background: linear-gradient(45deg, #287fa7, #213088);
+  border: none;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(45deg, #218838, #213088);
+}
+

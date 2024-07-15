@@ -22,12 +22,16 @@ function Funding() {
   return (
     <Container fluid className="home-container">
       <h2 className="my-4 text-center">Who is getting funded?</h2>
-      <Button 
-        as={Link}
-        to="/fundinganalysis"
-        className="text-left align-items-center btn btn-success my-4">
-            Analyze Funding Trends
+      <div className="d-flex justify-content-center my-4">
+        <Button
+          as={Link}
+          to="/fundinganalysis"
+          className="text-left align-items-center btn btn-success gradient-button"
+        >
+          Analyze Funding Trends
         </Button>
+      </div>
+
       <FundingTable rows={fundingData} />
     </Container>
   );

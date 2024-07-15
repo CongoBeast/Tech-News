@@ -26,7 +26,7 @@ function Sidebar() {
       <Navbar.Brand as={Link} to="/">
         <img src="https://github.com/CongoBeast/Tech-News/blob/master/src/components/tech-week.png?raw=true" 
         alt="Imat Tech Logo"
-          style={{ maxHeight: "100px", maxWidth: "100px", marginBottom: "10px" }}
+          style={{ maxHeight: "50px", maxWidth: "50px" }}
           className="d-flex align-items-center"
         />
       </Navbar.Brand>
@@ -34,7 +34,7 @@ function Sidebar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={toggleSidebar} />
 
       <Navbar.Collapse id="basic-navbar-nav" className={!isOpen && "d-none d-lg-block"}>
-        <Nav className="flex-column gap-4" style={{ padding: "2rem", textAlign: "right" }}>
+        <Nav className="flex-column gap-3" style={{ padding: "2rem", textAlign: "right" }}>
           <Button
             as={Link}
             to="/home"

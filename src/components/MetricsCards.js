@@ -1,27 +1,27 @@
-import React  from 'react';
+import React from 'react';
+import { Card, Row, Col } from 'react-bootstrap';
 
-
-// const metrics = [
-//   { label: 'Number of Posts', value: 10 },
-//   { label: 'Number of Drafts', value: 5 },
-//   { label: 'Posts this week', value: 5 },
-//   { label: 'Other Metric', value: 7 },
-// ];
+const gradientColors = [
+  'linear-gradient(45deg, #6a11cb 0%, #2575fc 100%)',
+  'linear-gradient(45deg, #ff758c 0%, #6a11cb 100%)',
+  'linear-gradient(45deg, #2575fc 0%, #fecfef 99%, #fecfef 100%)',
+  'linear-gradient(45deg, #2575fc 0%, #6a11cb 100%)',
+];
 
 function MetricsCards({ metrics }) {
   return (
-    <div className="row mb-4">
+    <Row>
       {metrics.map((metric, index) => (
-        <div key={index} className="col-md-2 mx mb-4">
-          <div className="card shadow-sm h-100">
-            <div className="card-body text-center">
-              <p className="card-title">{metric.label}</p>
-              <h1 className="card-text">{metric.value}</h1>
-            </div>
-          </div>
-        </div>
+        <Col md={3} key={index} className="mb-4">
+          <Card style={{ background: gradientColors[index % gradientColors.length], color: 'white' }}>
+            <Card.Body>
+              <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }} >{metric.value}</Card.Title>
+              <Card.Text>{metric.label}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
       ))}
-    </div>
+    </Row>
   );
 }
 

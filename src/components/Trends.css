@@ -1,0 +1,12 @@
+.metric-card {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    text-align: center;
+  }
+  
+  .metric-card .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Container, Row, Col, Card, Dropdown } from 'react-bootstrap';
+import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
 
@@ -12,18 +12,16 @@ function FundingAnalysis() {
   const [filteredData, setFilteredData] = useState([]);
   const [lineData, setLineData] = useState({});
   const [barData, setBarData] = useState({});
-  const [pieData, setPieData] = useState({});
+  const [doughnutData, setDoughnutData] = useState({});
   const [regionBarData, setRegionBarData] = useState({});
   const [topFunding, setTopFunding] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const [year, setYear] = useState(2024);
-  const [month, setMonth] = useState('July');
-  const [region, setRegion] = useState('america');
-  const [tag, setTag] = useState('AI');
-  const [type, setType] = useState('Series A');
-
-
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [region, setRegion] = useState('');
+  const [tag, setTag] = useState('');
+  const [type, setType] = useState('');
 
   useEffect(() => {
     fetchFundingData();
@@ -39,10 +37,10 @@ function FundingAnalysis() {
       const data = response.data;
       setFundingData(data);
       processFundingData(data);
-      setLoading(false); // Data fetching is complete
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching funding data:', error);
-      setLoading(false); // Even on error, stop loading
+      setLoading(false);
     }
   };
 
@@ -58,58 +56,42 @@ function FundingAnalysis() {
   };
 
   const processFundingData = (data) => {
-    const tags = ['AI', 'Blockchain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric'];
-    const continents = ['america', 'europe', 'asia', 'africa', 'middleEast'];
+    const tags = ['AI', 'Blockchain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric' , 'FinTech'];
+    const continents = ['america', 'europe', 'asia', 'africa', 'middleeast'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const types = ['Series A', 'Series B', 'Pre-Seed', 'Seed', 'Pre-Series A'];
-
-    const tagsData = tags.map(tag => data.filter(article => article.tag === tag));
-    const continentData = continents.map(continent => data.filter(article => article.region === continent).length);
+    const types = ['Series A', 'Series B', 'Pre-Seed', 'Seed', 'Pre-Series A' , 'Other'];
 
     const tagSummaries = tags.map(tag => {
       const articlesWithTag = data.filter(article => article.tag === tag);
-      const totalSize = articlesWithTag.reduce((sum, article) => {
-        const size = parseInt(article.size, 10) || 0;
-        return sum + size;
-      }, 0);
+      const totalSize = articlesWithTag.reduce((sum, article) => sum + (parseInt(article.size, 10) || 0), 0);
       return totalSize;
     });
 
     const regionSummaries = continents.map(region => {
       const articlesWithTag = data.filter(article => article.region === region);
-      const totalSize = articlesWithTag.reduce((sum, article) => {
-        const size = parseInt(article.size, 10) || 0;
-        return sum + size;
-      }, 0);
+      const totalSize = articlesWithTag.reduce((sum, article) => sum + (parseInt(article.size, 10) || 0), 0);
       return totalSize;
     });
 
     const monthSummaries = months.map(month => {
       const articlesWithTag = data.filter(article => article.month === month);
-      const totalSize = articlesWithTag.reduce((sum, article) => {
-        const size = parseInt(article.size, 10) || 0;
-        return sum + size;
-      }, 0);
+      const totalSize = articlesWithTag.reduce((sum, article) => sum + (parseInt(article.size, 10) || 0), 0);
       return totalSize;
     });
 
     const typeSummaries = types.map(type => {
       const articlesWithTag = data.filter(article => article.type === type);
-      const totalSize = articlesWithTag.reduce((sum, article) => {
-        const size = parseInt(article.size, 10) || 0;
-        return sum + size;
-      }, 0);
+      const totalSize = articlesWithTag.reduce((sum, article) => sum + (parseInt(article.size, 10) || 0), 0);
       return totalSize;
     });
 
-    // Processing logic for charts and top funding cards
-    const tagBarChartData = {
+    const lineChartData = {
       labels: tags,
       datasets: [
         {
           label: 'Funding by Tag',
           data: tagSummaries,
-          backgroundColor: 'rgba(75,192,192,0.4)',
+          backgroundColor: 'rgba(75,192,192,0.1)',
           borderColor: 'rgba(75,192,192,1)',
           borderWidth: 1,
         },
@@ -129,7 +111,7 @@ function FundingAnalysis() {
       ],
     };
 
-    const pieChartData = {
+    const doughnutChartData = {
       labels: types,
       datasets: [
         {
@@ -142,8 +124,6 @@ function FundingAnalysis() {
             'rgba(75,192,192,0.6)',
             'rgba(153,102,255,0.6)',
           ],
-          borderWidth: 1,
-          cutout: '50%', // Turn pie chart into a donut chart
         },
       ],
     };
@@ -152,9 +132,9 @@ function FundingAnalysis() {
       labels: continents,
       datasets: [
         {
-          label: 'Funding by Region (USD)',
+          label: 'Funding by Region',
           data: regionSummaries,
-          backgroundColor: 'rgba(153,102,255,0.4)',
+          backgroundColor: 'rgba(153,102,255,0.6)',
           borderColor: 'rgba(153,102,255,1)',
           borderWidth: 1,
         },
@@ -162,18 +142,19 @@ function FundingAnalysis() {
     };
 
     const topFundingMetrics = {
-      highestFunding: Math.max(...tagSummaries), // Replace with highest funding amount
-      topContinent: continents[regionSummaries.indexOf(Math.max(...regionSummaries))], // Replace with continent with the most funding
-      topTag: tags[tagSummaries.indexOf(Math.max(...tagSummaries))], // Replace with tag with the most funding
+      highestFunding: Math.max(...tagSummaries),
+      topContinent: continents[regionSummaries.indexOf(Math.max(...regionSummaries))],
+      topTag: tags[tagSummaries.indexOf(Math.max(...tagSummaries))],
     };
 
-    // Set chart data
-    setLineData(barChartData); // Change line chart to bar chart data
-    setBarData(tagBarChartData); // Bar chart for funding by tag
-    setPieData(pieChartData); // Donut chart
-    setRegionBarData(regionBarChartData); // Bar chart for funding by region
+    setLineData(lineChartData);
+    setBarData(barChartData);
+    setDoughnutData(doughnutChartData);
+    setRegionBarData(regionBarChartData);
     setTopFunding(topFundingMetrics);
   };
+
+  const formatMillions = value => `$${(value / 1e6).toFixed(1)}M`;
 
   return (
     <Container fluid>
@@ -182,55 +163,175 @@ function FundingAnalysis() {
         <div>Loading...</div>
       ) : (
         <>
+          <Row className="mb-4">
+            <Col>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">Year</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setYear('2021')}>2021</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setYear('2022')}>2022</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setYear('2023')}>2023</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setYear('2023')}>2024</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">Month</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(month => (
+                    <Dropdown.Item key={month} onClick={() => setMonth(month)}>{month}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">Region</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {['america', 'europe', 'asia', 'africa', 'middleEast'].map(region => (
+                    <Dropdown.Item key={region} onClick={() => setRegion(region)}>{region}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">Tag</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {['AI', 'Blockchain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric'].map(tag => (
+                    <Dropdown.Item key={tag} onClick={() => setTag(tag)}>{tag}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">Type</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {['Series A', 'Series B', 'Pre-Seed', 'Seed', 'Pre-Series A'].map(type => (
+                    <Dropdown.Item key={type} onClick={() => setType(type)}>{type}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+          </Row>
           <Row>
-            <Col md={3}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #ff7e5f, #feb47b)', color: 'white' }}>
+            <Col md={4}>
+              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
-                  <Card.Title>${topFunding.highestFunding}</Card.Title>
-                  <Card.Text>Highest Funding This Month</Card.Text>
+                  <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{formatMillions(topFunding.highestFunding)}</Card.Title>
+                  <Card.Text>Highest Funding </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={3}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #4facfe, #00f2fe)', color: 'white' }}>
+            <Col md={4}>
+              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
-                <Card.Title>{topFunding.topContinent}</Card.Title>
-                <Card.Text>Most funded region</Card.Text>
+                  <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }}> {topFunding.topContinent}</Card.Title>
+                  <Card.Text>Top Continent</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={3}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #43e97b, #38f9d7)', color: 'white' }}>
+            <Col md={4}>
+              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
-                <Card.Title>{topFunding.topTag}</Card.Title>
-                  <Card.Text>Round with the most</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col md={3}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #43e97b, #38f9d7)', color: 'white' }}>
-                <Card.Body>
-                <Card.Title>{topFunding.topTag}</Card.Title>
-                  <Card.Text>Most funded tag</Card.Text>
+                  <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }}> {topFunding.topTag}</Card.Title>
+                  <Card.Text>Top Tag</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <Row>
-            <Col md={6} className="mb-4">
-              <Bar data={barData} options={{ maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { grid: { display: false } } } }} height={300} />
+            <Col md={6}>
+              <Card className="mb-4">
+                <Card.Body>
+                  <Bar
+                    data={lineData}
+                    options={{
+                      scales: {
+                        y: {
+                          ticks: {
+                            callback: (value) => formatMillions(value),
+                          },
+                          grid: {
+                            display: false, // Remove grid lines
+                          },
+                        },
+                        x: {
+                          grid: {
+                            display: false, // Remove grid lines
+                          },
+                        }
+                      },
+                    }}
+                  />
+                </Card.Body>
+              </Card>
             </Col>
-            <Col md={6} className="mb-4">
-              <Bar data={lineData} options={{ maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { grid: { display: false } } } }} height={300} />
+            <Col md={6}>
+              <Card className="mb-4">
+                <Card.Body>
+                
+                  <Bar
+                    data={barData}
+                    options={{
+                      scales: {
+                        y: {
+                          ticks: {
+                            callback: (value) => formatMillions(value),
+                          },
+                          grid: {
+                            display: false, // Remove grid lines
+                          },
+                        },
+                        x: {
+                          grid: {
+                            display: false, // Remove grid lines
+                          },
+                        }
+                      },
+                    }}
+                  />
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
           <Row>
-            <Col md={6} className="mb-4">
-              <Bar data={regionBarData} options={{ maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { grid: { display: false } } } }} height={300} />
+            <Col md={6}>
+              <Card className="mb-4">
+                <Card.Body>
+                  
+                  <Bar
+                    data={regionBarData}
+                    options={{
+                      scales: {
+                        y: {
+                          ticks: {
+                            callback: (value) => formatMillions(value),
+                          },
+                          grid: {
+                            display: false, // Remove grid lines
+                          },
+                        },
+                        x: {
+                          grid: {
+                            display: false, // Remove grid lines
+                          },
+                        }
+                      },
+                    }}
+                  />
+                </Card.Body>
+              </Card>
             </Col>
-            <Col md={6} className="mb-4">
-              <Pie data={pieData} options={{ maintainAspectRatio: false }} height={300} />
+            <Col md={6}>
+              <Card className="mb-4">
+                <Card.Body>
+                  
+                  <Doughnut data={doughnutData} />
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
         </>

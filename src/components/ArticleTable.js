@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { Button, Modal, Form, Card, Row, Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,6 +12,7 @@ function ArticleTable() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentArticle, setCurrentArticle] = useState({});
   const [articleCounts, setArticleCounts] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchArticles();
@@ -68,9 +70,27 @@ function ArticleTable() {
       });
   };
 
+  const filteredArticleEntries = articles.filter(entry => 
+    entry.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <ToastContainer />
+
+      <h1 className="text-center mb-4">Article Entries</h1>
+
+      <Button as={Link} to="/article-entry" className="btn btn-primary mb-4">
+        Create article entry
+      </Button>
+      
+      <Form.Control
+        type="text"
+        placeholder="Search Funding Entries"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4"
+      />
 
       <div className="table-responsive">
         <table className="table table-hover">
@@ -85,7 +105,7 @@ function ArticleTable() {
             </tr>
           </thead>
           <tbody>
-            {articles.map((article, index) => (
+            {filteredArticleEntries.map((article, index) => (
               <tr key={index}>
                 <td>{article._id}</td>
                 <td>{article.title}</td>

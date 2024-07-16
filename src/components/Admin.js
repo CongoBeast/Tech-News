@@ -5,6 +5,8 @@ import MetricsCards from './MetricsCards';
 import axios from 'axios';
 
 function Admin() {
+
+
   const [stats, setStats] = useState({
     numberOfPosts: 0,
     numberOfDrafts: 0,
@@ -62,9 +64,12 @@ function Admin() {
     return title.split(' ').length > 4 ? title.split(' ').slice(0, 4).join(' ') + '...' : title;
   };
 
+  const userString = localStorage.getItem('user');
+  const userType = localStorage.getItem('userType');
+
   return (
     <div className="container mt-5">
-      <h1 className="text-center mb-4">Welcome, Admin</h1>
+      <h1 className="text-center mb-4">Welcome, {userString} </h1>
       <MetricsCards metrics={metrics} />
       <div className='d-flex justify-content-center'>
         <Button
@@ -97,13 +102,14 @@ function Admin() {
           View article entries
         </Button>
 
-        <Button
-          as={Link}
-          to="/articles-pages"
-          className="btn btn-warning my-4"
-        >
+
+        {userType !== 'regular' && ( // Conditional rendering based on userType
+        <Button as={Link} to="/manage-users" className="btn btn-warning my-4 mx-4">
           Manage Users
         </Button>
+      )}
+
+
       </div>
       <Row>
         <Col md={6}>

@@ -26,6 +26,8 @@ function ArticleEntry() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+
+  const userString = localStorage.getItem('user');
   
   const [articleData, setArticleData] = useState({
     _id: '',
@@ -39,6 +41,7 @@ function ArticleEntry() {
     month: '',
     year: '',
     status: '',
+    username: userString
   });
 
   const [stats, setStats] = useState({
@@ -117,6 +120,7 @@ function ArticleEntry() {
           month: '',
           year: '',
           status: '',
+          username: userString
         });
         fetchStats();
         navigate('/admin');

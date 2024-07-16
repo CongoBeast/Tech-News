@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, ToggleButtonGroup, ToggleButton, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,45 +12,80 @@ function AuthPage() {
     confirmPassword: '',
     userType: 'regular',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleToggle = (value) => {
     setIsLogin(value === 1);
     setFormData({ ...formData, email: '', confirmPassword: '' });
+    setError('');
+    setMessage('');
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (!isLogin) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setError('Invalid email address');
+        return false;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
     const endpoint = isLogin ? 'login' : 'register';
     axios.post(`http://localhost:3001/${endpoint}`, formData)
       .then(response => {
+        setLoading(false);
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem('user', formData.username);
+          localStorage.setItem('userType', formData.userType);
           navigate('/admin');
+        } else {
+          setMessage('Operation successful');
         }
       })
       .catch(error => {
-        console.error('Error:', error);
+        setLoading(false);
+        setError(error.response ? error.response.data.message : 'An error occurred');
       });
   };
+
 
   return (
     <Container className="mt-5">
       <Row className="justify-content-md-center">
         <Col md={6}>
           <ToggleButtonGroup type="radio" name="authType" defaultValue={1} className="mb-3" onChange={handleToggle}>
-            <ToggleButton id="tbg-radio-1" value={1}>
+            <ToggleButton id="tbg-radio-1" value={1} variant="outline-primary">
               Sign In
             </ToggleButton>
-            <ToggleButton id="tbg-radio-2" value={2}>
+            <ToggleButton id="tbg-radio-2" value={2} variant="outline-success">
               Sign Up
             </ToggleButton>
           </ToggleButtonGroup>
-          <Form onSubmit={handleSubmit}>
+          {error && <Alert variant="danger">{error}</Alert>}
+          {message && <Alert variant="success">{message}</Alert>}
+          <Form onSubmit={(e) => handleSubmit(e)}>
             {!isLogin && (
               <Form.Group controlId="formEmail">
                 <Form.Label>Email address</Form.Label>
@@ -77,15 +112,15 @@ function AuthPage() {
                 <Form.Group controlId="formUserType">
                   <Form.Label>User Type</Form.Label>
                   <Form.Control as="select" name="userType" value={formData.userType} onChange={handleChange}>
-                    <option value="regular">Regular User</option>
-                    <option value="super">Super User</option>
+                    <option value="regular">Regular</option>
+                    <option value="admin">Admin</option>
                   </Form.Control>
                 </Form.Group>
               </>
             )}
 
-            <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
-              {isLogin ? 'Sign In' : 'Sign Up'}
+            <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
+              {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : isLogin ? 'Sign In' : 'Sign Up'}
             </Button>
           </Form>
         </Col>

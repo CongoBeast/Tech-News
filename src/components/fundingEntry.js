@@ -7,7 +7,8 @@ import { FaPaste } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 
 const regions = ['africa', 'asia', 'america', 'europe', 'middleeast'];
-const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles' , 'FinTech' , 'BioTech' , 'Agric'];
+const fundingType = ['Seed' ,'Pre-seed'  , 'Pre-series B', 'Pre-series A', 'Series A', 'Series B', 'Series C', 'Series D' , 'Other'];
+const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles' , 'FinTech' , 'BioTech' , 'Agric' , 'Logistics' , 'Ecommerce'];
 
 function LoadingOverlay({ message }) {
   return (
@@ -25,6 +26,8 @@ function FundingEntry() {
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
 
+  const userString = localStorage.getItem('user');
+
   const [fundingData, setFundingData] = useState({
     _id: '',
     startupName: '',
@@ -39,7 +42,8 @@ function FundingEntry() {
     date: '',
     week: '',
     month: '',
-    year: ''
+    year: '',
+    username: userString
   });
 
   useEffect(() => {
@@ -99,7 +103,8 @@ function FundingEntry() {
           date: '',
           week: '',
           month: '',
-          year: ''
+          year: '',
+          username: userString
         });
         navigate('/admin');
       })
@@ -142,7 +147,7 @@ function FundingEntry() {
           </Col>
 
           <Col md={4}>
-            <Form.Group controlId="type" className="mb-3">
+            {/* <Form.Group controlId="type" className="mb-3">
               <Form.Label>Type</Form.Label>
               <Form.Control
                 type="text"
@@ -150,6 +155,25 @@ function FundingEntry() {
                 value={fundingData.type}
                 onChange={handleChange}
               />
+              <option value="">Select Type</option>
+                {fundingType.map((region) => (
+                  <option key={region} value={region}>{region}</option>
+                ))}
+            </Form.Group> */}
+
+            <Form.Group controlId="type" className="mb-3">
+              <Form.Label>Type</Form.Label>
+              <Form.Control
+                as="select"
+                name="type"
+                value={fundingData.type}
+                onChange={handleChange}
+              >
+                <option value="">Select Type</option>
+                {fundingType.map((region) => (
+                  <option key={region} value={region}>{region}</option>
+                ))}
+              </Form.Control>
             </Form.Group>
           </Col>
 

@@ -17,6 +17,7 @@ import ArticleEntry from './components/ArticleEntry';
 import FundingEntry from './components/fundingEntry'; // Import the ArticleEntry component
 import RegionArticles from './components/RegionArticles';
 import AuthPage from './components/AuthPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
             <Route path="/trends" element={<Trends />} />
             <Route path="/about" element={<About />} />
             <Route path="/region" element={<Region />} />
-            <Route path="/admin" element={<Admin />} />
+            {/* <Route path="/admin" element={<Admin />} /> */}
             <Route path="/funding" element={<Funding />} />
             <Route path="/fundinganalysis" element={<FundingAnalysis />} />
             <Route path="/startup/:name" element={<StartupCard />} />
@@ -41,6 +42,9 @@ function App() {
             <Route path="/edit-article/:id" component={ArticleEntry} />
             <Route path="/edit-funding/:id" component={FundingEntry} />
 
+            <Route element={<ProtectedRoute />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
 
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/article-entry" element={<ArticleEntry />} />

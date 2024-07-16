@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { BsFillFileBarGraphFill } from "react-icons/bs";
 import { IoIosInformationCircle } from "react-icons/io";
@@ -9,12 +9,31 @@ import './Sidebar.css';
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if token exists in local storage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [location]); // Check login status on location change
 
   const isLinkActive = (path) => location.pathname === path;
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    // Remove token from local storage and update state
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/home'); // Redirect to home after logout
   };
 
   return (
@@ -45,7 +64,6 @@ function Sidebar() {
             <FaHome />
             <span style={{ marginLeft: "1rem" }}>Home</span>
           </Button>
-
 
           <Button
             as={Link}
@@ -80,16 +98,28 @@ function Sidebar() {
             <span style={{ marginLeft: "1rem" }}>About Us</span>
           </Button>
 
-          <Button
-            as={Link}
-            to="/admin"
-            variant={isLinkActive("/admin") ? "primary" : "outline-light"}
-            className="text-left d-flex align-items-center"
-            style={{ marginBottom: "1rem" }}
-          >
-            <IoIosInformationCircle />
-            <span style={{ marginLeft: "1rem" }}>Admin</span>
-          </Button>
+          {isLoggedIn && (
+            <>
+              <Button
+                as={Link}
+                to="/admin"
+                variant={isLinkActive("/admin") ? "primary" : "outline-light"}
+                className="text-left d-flex align-items-center"
+                style={{ marginBottom: "1rem" }}
+              >
+                <IoIosInformationCircle />
+                <span style={{ marginLeft: "1rem" }}>Admin</span>
+              </Button>
+              <Button
+                onClick={handleLogout}
+                variant="outline-light"
+                className="text-left d-flex align-items-center"
+                style={{ marginBottom: "1rem" }}
+              >
+                <span style={{ marginLeft: "1rem" }}>Logout</span>
+              </Button>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

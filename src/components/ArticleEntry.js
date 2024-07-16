@@ -64,7 +64,7 @@ function ArticleEntry() {
   };
 
   const fetchStats = () => {
-    axios.get('http://localhost:3001/get-stats')
+    axios.get('https://tech-news-backend.onrender.com/get-stats')
       .then(response => {
         setStats(response.data);
       })
@@ -105,7 +105,7 @@ function ArticleEntry() {
     setLoading(true);
     setLoadingMessage(status === 'Posted' ? 'Submitting...' : 'Saving...');
 
-    axios.post('http://localhost:3001/submit-article', updatedArticleData)
+    axios.post('https://tech-news-backend.onrender.com/submit-article', updatedArticleData)
       .then((response) => {
         toast.success(status === 'Posted' ? 'Article posted' : 'Draft saved');
         setArticleData({

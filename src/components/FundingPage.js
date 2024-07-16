@@ -14,7 +14,7 @@ function FundingPage() {
   }, []);
 
   const fetchFundingEntries = () => {
-    axios.get('http://localhost:3001/funding-news')
+    axios.get('https://tech-news-backend.onrender.com/funding-news')
       .then(response => {
         setFundingEntries(response.data);
       })
@@ -24,7 +24,7 @@ function FundingPage() {
   };
 
   const handleDelete = (id) => {
-    axios.post('http://localhost:3001/delete-article', { _id: id })
+    axios.post('https://tech-news-backend.onrender.com/delete-article', { _id: id })
       .then(() => {
         fetchFundingEntries();
       })

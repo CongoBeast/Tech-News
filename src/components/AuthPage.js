@@ -52,7 +52,7 @@ function AuthPage() {
 
     setLoading(true);
     const endpoint = isLogin ? 'login' : 'register';
-    axios.post(`http://localhost:3001/${endpoint}`, formData)
+    axios.post(`https://tech-news-backend.onrender.com/${endpoint}`, formData)
       .then(response => {
         setLoading(false);
         if (response.data.token) {

@@ -22,7 +22,7 @@ function Admin() {
   }, []);
 
   const fetchStats = () => {
-    axios.get('http://localhost:3001/get-stats')
+    axios.get('https://tech-news-backend.onrender.com/get-stats')
       .then(response => {
         setStats(response.data);
       })
@@ -32,7 +32,7 @@ function Admin() {
   };
 
   const fetchRecentArticles = () => {
-    axios.get('http://localhost:3001/get-articles')
+    axios.get('https://tech-news-backend.onrender.com/get-articles')
       .then(response => {
         const sortedArticles = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setRecentArticles(sortedArticles.slice(0, 5));
@@ -43,7 +43,7 @@ function Admin() {
   };
 
   const fetchRecentFunding = () => {
-    axios.get('http://localhost:3001/funding-news')
+    axios.get('https://tech-news-backend.onrender.com/funding-news')
       .then(response => {
         const sortedFunding = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setRecentFunding(sortedFunding.slice(0, 5));

@@ -33,7 +33,7 @@ function FundingAnalysis() {
 
   const fetchFundingData = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/funding-news');
+      const response = await axios.get('https://tech-news-backend.onrender.com/funding-news');
       const data = response.data;
       setFundingData(data);
       processFundingData(data);

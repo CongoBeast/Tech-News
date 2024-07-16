@@ -41,7 +41,7 @@ function RegionArticles() {
   }, [region, selectedMonth, selectedWeek, selectedYear, activeGenre]);
 
   const fetchArticles = () => {
-    axios.get(`http://localhost:3001/get-articles?region=${region}`)
+    axios.get(`https://tech-news-backend.onrender.com/get-articles?region=${region}`)
       .then(response => {
         setArticles(response.data);
       })

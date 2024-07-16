@@ -40,7 +40,7 @@ function Trends() {
 
   const fetchChartData = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/get-articles');
+      const response = await axios.get('https://tech-news-backend.onrender.com/get-articles');
       const articles = response.data;
   
       // Process the data

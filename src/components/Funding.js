@@ -10,7 +10,7 @@ function Funding() {
   const [fundingData, setFundingData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/funding-news')
+    axios.get('https://tech-news-backend.onrender.com/funding-news')
       .then(response => {
         setFundingData(response.data);
       })

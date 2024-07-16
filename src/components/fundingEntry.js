@@ -86,7 +86,7 @@ function FundingEntry() {
     setLoading(true);
     setLoadingMessage('Submitting...');
 
-    axios.post('http://localhost:3001/submit-funding-news', fundingData)
+    axios.post('https://tech-news-backend.onrender.com/submit-funding-news', fundingData)
       .then((response) => {
         toast.success('Funding news submitted');
         setFundingData({

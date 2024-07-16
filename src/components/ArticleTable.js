@@ -19,7 +19,7 @@ function ArticleTable() {
   }, []);
 
   const fetchArticles = () => {
-    axios.get('http://localhost:3001/get-articles')
+    axios.get('https://tech-news-backend.onrender.com/get-articles')
       .then(response => {
         setArticles(response.data);
         setArticleCounts(response.data.length);
@@ -45,7 +45,7 @@ function ArticleTable() {
   };
 
   const handleEditSubmit = () => {
-    axios.post('http://localhost:3001/update-article', currentArticle)
+    axios.post('https://tech-news-backend.onrender.com/update-article', currentArticle)
       .then(response => {
         toast.success('Article updated successfully');
         setShowEditModal(false);
@@ -58,7 +58,7 @@ function ArticleTable() {
   };
 
   const handleDeleteConfirm = () => {
-    axios.post('http://localhost:3001/delete-article', { _id: currentArticle._id })
+    axios.post('https://tech-news-backend.onrender.com/delete-article', { _id: currentArticle._id })
       .then(response => {
         toast.success('Article deleted successfully');
         setShowDeleteModal(false);

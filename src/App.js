@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import {HashRouter, Routes, Route, Outlet } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './components/styles.css';
 import Sidebar from './components/Sidebar';
@@ -22,7 +22,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-  <HashRouter> {" "}
+  <HashRouter>
       <div className="d-flex">
         <Sidebar />
         <div className="container-fluid">
@@ -54,7 +54,7 @@ function App() {
               </Routes>
         </div>
       </div>
-    </HashRouter>{" "}
+    </HashRouter>
   );
 }
 

@@ -28,28 +28,28 @@ function App() {
         <div className="container-fluid">
           <Routes>
             <Route path="/#/home" element={<Home />} />
-            <Route path="/trends" element={<Trends />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/region" element={<Region />} />
-            {/* <Route path="/admin" element={<Admin />} /> */}
-            <Route path="/funding" element={<Funding />} />
-            <Route path="/fundinganalysis" element={<FundingAnalysis />} />
-            <Route path="/startup/:name" element={<StartupCard />} />
+            <Route path="/#/trends" element={<Trends />} />
+            <Route path="/#/about" element={<About />} />
+            <Route path="/#/region" element={<Region />} />
+            {/* <Route path="/#/admin" element={<Admin />} /> */}
+            <Route path="/#/funding" element={<Funding />} />
+            <Route path="/#/fundinganalysis" element={<FundingAnalysis />} />
+            <Route path="/#/startup/:name" element={<StartupCard />} />
 
-            <Route path='/funding-page' element={<FundingPage />}/>
-            <Route path='/articles-pages' element={<ArticlesPage/>}/>
+            <Route path='/#/funding-page' element={<FundingPage />}/>
+            <Route path='/#/articles-pages' element={<ArticlesPage/>}/>
 
-            <Route path="/edit-article/:id" component={ArticleEntry} />
-            <Route path="/edit-funding/:id" component={FundingEntry} />
+            <Route path="/#/edit-article/:id" component={ArticleEntry} />
+            <Route path="/#/edit-funding/:id" component={FundingEntry} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/#/admin" element={<Admin />} />
             </Route>
 
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/article-entry" element={<ArticleEntry />} />
-            <Route path="/funding-entry" element={<FundingEntry />} /> {/* Add the route for the article entry page */}
-            <Route path="/region/:region" element={<RegionArticles />} />  {/* Add RegionArticles route */}
+            <Route path="/#/auth" element={<AuthPage />} />
+            <Route path="/#/article-entry" element={<ArticleEntry />} />
+            <Route path="/#/funding-entry" element={<FundingEntry />} /> {/* Add the route for the article entry page */}
+            <Route path="/#/region/:region" element={<RegionArticles />} />  {/* Add RegionArticles route */}
           </Routes>
         </div>
       </div>

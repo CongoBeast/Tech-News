@@ -27,7 +27,7 @@ function App() {
         <Sidebar />
         <div className="container-fluid">
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/#/home" element={<Home />} />
             <Route path="/trends" element={<Trends />} />
             <Route path="/about" element={<About />} />
             <Route path="/region" element={<Region />} />

@@ -22,12 +22,11 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <Router>
+  <HashRouter> {" "}
       <div className="d-flex">
         <Sidebar />
         <div className="container-fluid">
-          <HashRouter>
-              {" "}
+
               <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/trends" element={<Trends />} />
@@ -53,10 +52,9 @@ function App() {
                 <Route path="/funding-entry" element={<FundingEntry />} /> {/* Add the route for the article entry page */}
                 <Route path="/region/:region" element={<RegionArticles />} />  {/* Add RegionArticles route */}
               </Routes>
-          </HashRouter>{" "}
         </div>
       </div>
-    </Router>
+    </HashRouter>{" "}
   );
 }
 

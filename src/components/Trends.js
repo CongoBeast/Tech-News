@@ -12,8 +12,8 @@ import './Trends.css'; // Import the CSS file for custom styles
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, ArcElement, Filler);
 
 function Trends() {
-  const [region, setRegion] = useState('America');
-  const [genre, setGenre] = useState('Select Genre');
+  const [region, setRegion] = useState('All');
+  const [genre, setGenre] = useState('All');
   const [date, setDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
   const [month, setMonth] = useState('Select Month');
@@ -51,8 +51,8 @@ function Trends() {
         const articleDate = new Date(article.date);
         const selectedYear = year !== 'Select Year' ? articleDate.getFullYear() === parseInt(year) : true;
         const selectedMonth = month !== 'Select Month' ? articleDate.getMonth() === months.indexOf(month) : true;
-        const selectedRegion = region !== 'Select Region' ? article.region === region.toLowerCase() : true;
-        const selectedGenre = genre !== 'Select Genre' ? article.tag === genre : true;
+        const selectedRegion = region !== 'All' ? article.region === region.toLowerCase() : true;
+        const selectedGenre = genre !== 'All' ? article.tag === genre : true;
         return selectedYear && selectedMonth && selectedRegion && selectedGenre;
       });
 
@@ -144,6 +144,7 @@ function Trends() {
       <Row className="mb-4">
         <Col md={4}>
           <DropdownButton id="dropdown-basic-button" title={region} onSelect={handleRegionSelect}>
+            <Dropdown.Item eventKey="All">All</Dropdown.Item>
             <Dropdown.Item eventKey="america">America</Dropdown.Item>
             <Dropdown.Item eventKey="europe">Europe</Dropdown.Item>
             <Dropdown.Item eventKey="asia">Asia</Dropdown.Item>
@@ -153,6 +154,7 @@ function Trends() {
         </Col>
         <Col md={4}>
           <DropdownButton id="dropdown-basic-button" title={genre} onSelect={handleGenreSelect}>
+            <Dropdown.Item eventKey="All">All</Dropdown.Item>
             <Dropdown.Item eventKey="AI">AI</Dropdown.Item>
             <Dropdown.Item eventKey="Blockchain">Blockchain</Dropdown.Item>
             <Dropdown.Item eventKey="IoT">IoT</Dropdown.Item>
@@ -178,7 +180,7 @@ function Trends() {
     ) : (
       <>
         <Row className="mb-4">
-          <Col md={4}>
+          <Col md={4} sm={2}>
             <Card className="metric-card">
               <Card.Body>
                 <Card.Title> {numPosts}</Card.Title>

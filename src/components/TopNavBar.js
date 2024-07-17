@@ -1,13 +1,30 @@
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import { Button } from "react-bootstrap";
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link, useLocation , useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Button } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+
+
+import { RxDashboard, RxPinLeft } from "react-icons/rx";
+import { GiTruck } from "react-icons/gi";
+import { IoPieChartSharp } from "react-icons/io5";
+import { FaInfoCircle } from "react-icons/fa";
+import { FaFileInvoiceDollar } from "react-icons/fa";
+import { IoIosPeople } from "react-icons/io";
+import { GiCoalWagon } from "react-icons/gi";
+import { BiSupport } from "react-icons/bi";
+import { SiMicrosoftexcel } from "react-icons/si";
+import { RiAlarmWarningFill } from "react-icons/ri";
 import { FaHome } from "react-icons/fa";
 import { BsFillFileBarGraphFill } from "react-icons/bs";
 import { IoIosInformationCircle } from "react-icons/io";
 import { FaNewspaper } from "react-icons/fa6";
-import './Sidebar.css';
 
-function Sidebar() {
+
+function TopNavBar() {
+
   const location = useLocation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -25,10 +42,6 @@ function Sidebar() {
 
   const isLinkActive = (path) => location.pathname === path;
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleLogout = () => {
     // Remove token from local storage and update state
     localStorage.removeItem('token');
@@ -37,12 +50,10 @@ function Sidebar() {
   };
 
   return (
-    <Navbar
-      expand="lg"
-      variant="dark"
-      className="flex-column d-none d-lg-block sidebar"
-    >
-      <Navbar.Brand as={Link} to="/">
+    <Navbar collapseOnSelect expand="md" className="bg-body-tertiary d-lg-none mb-3 mx p-1">
+      <Container>
+        {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+        <Navbar.Brand as={Link} to="/">
         <img src="https://github.com/CongoBeast/Tech-News/blob/master/src/components/tech-week.png?raw=true" 
         alt="Imat Tech Logo"
           style={{ maxHeight: "50px", maxWidth: "50px" }}
@@ -50,33 +61,32 @@ function Sidebar() {
         />
       </Navbar.Brand>
 
-      <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={toggleSidebar} />
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav ">
+    
+          <Nav className='ml-auto' style={{textAlign: "right"}}>
 
-      <Navbar.Collapse id="basic-navbar-nav" className={!isOpen && "d-none d-lg-block"}>
-        <Nav className="flex-column gap-3" style={{ padding: "2rem", textAlign: "right" }}>
-          <Button
-            as={Link}
-            to="/home"
-            variant={isLinkActive("/home") ? "primary" : "outline-light"}
-            className="text-left d-flex align-items-center"
-            style={{ marginBottom: "1rem" }}
-          >
-            <FaHome />
-            <span style={{ marginLeft: "1rem" }}>Home</span>
-          </Button>
 
-          <Button
-            as={Link}
+          <Nav.Link    as={Link}
+              to="/home"
+              variant={isLinkActive("/home") ? "primary" : "outline-light"}
+              className="text-left d-flex align-items-center"
+              style={{ marginBottom: "1rem" }}>
+        
+              <FaHome />
+              <span style={{ marginLeft: "1rem" }}>Home</span>
+          </Nav.Link>
+
+          <Nav.Link as={Link}
             to="/funding"
             variant={isLinkActive("/funding") ? "primary" : "outline-light"}
             className="text-left d-flex align-items-center"
-            style={{ marginBottom: "1rem" }}
-          >
+            style={{ marginBottom: "1rem" }}>
             <FaNewspaper />
             <span style={{ marginLeft: "1rem" }}>Funding News</span>
-          </Button>
+          </Nav.Link>
 
-          <Button
+          <Nav.Link
             as={Link}
             to="/trends"
             variant={isLinkActive("/trends") ? "primary" : "outline-light"}
@@ -85,9 +95,9 @@ function Sidebar() {
           >
             <BsFillFileBarGraphFill />
             <span style={{ marginLeft: "1rem" }}>Trends</span>
-          </Button>
+          </Nav.Link>
 
-          <Button
+          <Nav.Link
             as={Link}
             to="/about"
             variant={isLinkActive("/about") ? "primary" : "outline-light"}
@@ -96,11 +106,11 @@ function Sidebar() {
           >
             <IoIosInformationCircle />
             <span style={{ marginLeft: "1rem" }}>About Us</span>
-          </Button>
+          </Nav.Link>
 
           {isLoggedIn && (
             <>
-              <Button
+              <Nav.Link
                 as={Link}
                 to="/admin"
                 variant={isLinkActive("/admin") ? "primary" : "outline-light"}
@@ -109,21 +119,24 @@ function Sidebar() {
               >
                 <IoIosInformationCircle />
                 <span style={{ marginLeft: "1rem" }}>Admin</span>
-              </Button>
-              <Button
+              </Nav.Link>
+              <Nav.Link
                 onClick={handleLogout}
                 variant="outline-light"
                 className="text-left d-flex align-items-center"
                 style={{ marginBottom: "1rem" }}
               >
                 <span style={{ marginLeft: "1rem" }}>Logout</span>
-              </Button>
+              </Nav.Link>
             </>
           )}
-        </Nav>
-      </Navbar.Collapse>
+
+
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 }
 
-export default Sidebar;
+export default TopNavBar;

@@ -87,7 +87,7 @@ function FundingTable({ rows }) {
   return (
     <div className="container mt-4">
       <div className="row mb-3">
-        <div className="col">
+        <div className="col-12 col-md">
           <input
             type="text"
             name="year"
@@ -97,7 +97,7 @@ function FundingTable({ rows }) {
             className="form-control"
           />
         </div>
-        <div className="col">
+        <div className="col-12 col-md">
           <input
             type="text"
             name="month"
@@ -107,7 +107,7 @@ function FundingTable({ rows }) {
             className="form-control"
           />
         </div>
-        <div className="col">
+        <div className="col-12 col-md">
           <input
             type="text"
             name="tag"
@@ -117,7 +117,7 @@ function FundingTable({ rows }) {
             className="form-control"
           />
         </div>
-        <div className="col">
+        <div className="col-12 col-md">
           <input
             type="text"
             name="region"
@@ -127,7 +127,7 @@ function FundingTable({ rows }) {
             className="form-control"
           />
         </div>
-        <div className="col">
+        <div className="col-12 col-md">
           <input
             type="text"
             name="size"
@@ -137,7 +137,7 @@ function FundingTable({ rows }) {
             className="form-control"
           />
         </div>
-        <div className="col">
+        <div className="col-12 col-md">
           <input
             type="text"
             name="type"
@@ -148,32 +148,34 @@ function FundingTable({ rows }) {
           />
         </div>
       </div>
-      <table className="table table-hover" style={{ borderRadius: '15px', overflow: 'hidden' }}>
-        <thead style={{ backgroundColor: '#000', color: '#fff' }}>
-          <tr>
-            <th scope="col">Startup Name</th>
-            <th scope="col" className="text-right">Type</th>
-            <th scope="col" className="text-right">Size ($)</th>
-            <th scope="col" className="text-right">Region</th>
-            <th scope="col" className="text-right">Tag</th>
-            <th scope="col" className="text-right" onClick={handleSort} style={{ cursor: 'pointer' }}>
-              Date {sortOrder === 'asc' ? '↑' : '↓'}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredRows.map((row) => (
-            <tr key={row._id} onClick={() => handleRowClick(row)} style={{ cursor: 'pointer' }}>
-              <td>{row.startupName}</td>
-              <td className="text-right">{row.type}</td>
-              <td className="text-right">{formatSize(row.size)}</td>
-              <td className="text-right">{row.region}</td>
-              <td className="text-right">{row.tag}</td>
-              <td className="text-right">{row.date}</td>
+      <div className="table-responsive">
+        <table className="table table-hover">
+          <thead style={{ backgroundColor: '#000', color: '#fff' }}>
+            <tr>
+              <th scope="col">Startup Name</th>
+              <th scope="col" className="text-right">Type</th>
+              <th scope="col" className="text-right">Size ($)</th>
+              <th scope="col" className="text-right">Region</th>
+              <th scope="col" className="text-right">Tag</th>
+              <th scope="col" className="text-right" onClick={handleSort} style={{ cursor: 'pointer' }}>
+                Date {sortOrder === 'asc' ? '↑' : '↓'}
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredRows.map((row) => (
+              <tr key={row._id} onClick={() => handleRowClick(row)} style={{ cursor: 'pointer' }}>
+                <td>{row.startupName}</td>
+                <td className="text-right">{row.type}</td>
+                <td className="text-right">{formatSize(row.size)}</td>
+                <td className="text-right">{row.region}</td>
+                <td className="text-right">{row.tag}</td>
+                <td className="text-right">{row.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

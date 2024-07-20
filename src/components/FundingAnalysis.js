@@ -154,7 +154,10 @@ function FundingAnalysis() {
     setTopFunding(topFundingMetrics);
   };
 
-  const formatMillions = value => `$${(value / 1e6).toFixed(1)}M`;
+  const formatMillions = value => {
+    if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
+    return `$${(value / 1e6).toFixed(1)}M`;
+  };
 
   return (
     <Container fluid>
@@ -166,18 +169,18 @@ function FundingAnalysis() {
           <Row className="mb-4">
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">Year</Dropdown.Toggle>
+                <Dropdown.Toggle variant="secondary">{year || 'Year'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setYear('2021')}>2021</Dropdown.Item>
                   <Dropdown.Item onClick={() => setYear('2022')}>2022</Dropdown.Item>
                   <Dropdown.Item onClick={() => setYear('2023')}>2023</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setYear('2023')}>2024</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setYear('2024')}>2024</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">Month</Dropdown.Toggle>
+                <Dropdown.Toggle variant="secondary">{month || 'Month'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(month => (
                     <Dropdown.Item key={month} onClick={() => setMonth(month)}>{month}</Dropdown.Item>
@@ -187,7 +190,7 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">Region</Dropdown.Toggle>
+                <Dropdown.Toggle variant="secondary">{region || 'Region'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['america', 'europe', 'asia', 'africa', 'middleEast'].map(region => (
                     <Dropdown.Item key={region} onClick={() => setRegion(region)}>{region}</Dropdown.Item>
@@ -197,7 +200,7 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">Tag</Dropdown.Toggle>
+                <Dropdown.Toggle variant="secondary">{tag || 'Tag'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['AI', 'Blockchain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric'].map(tag => (
                     <Dropdown.Item key={tag} onClick={() => setTag(tag)}>{tag}</Dropdown.Item>
@@ -207,133 +210,137 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">Type</Dropdown.Toggle>
+                <Dropdown.Toggle variant="secondary">{type || 'Type'}</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {['Series A', 'Series B', 'Pre-Seed', 'Seed', 'Pre-Series A'].map(type => (
+                  {['Series A', 'Series B', 'Pre-Seed', 'Seed', 'Pre-Series A' , 'Other'].map(type => (
                     <Dropdown.Item key={type} onClick={() => setType(type)}>{type}</Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
           </Row>
+
           <Row>
-            <Col md={4}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
+            <Col md={3} className="mb-4">
+              <Card style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
-                  <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{formatMillions(topFunding.highestFunding)}</Card.Title>
-                  <Card.Text>Highest Funding </Card.Text>
+                  <Card.Title style={{ fontSize: '1.8rem' }}>{formatMillions(topFunding.highestFunding)}</Card.Title>
+                  <Card.Text style={{ fontSize: '0.8rem' }}>Highest Funding </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
+            <Col md={3} className="mb-4">
+              <Card style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
-                  <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }}> {topFunding.topContinent}</Card.Title>
-                  <Card.Text>Top Continent</Card.Text>
+                  <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topContinent}</Card.Title>
+                  <Card.Text style={{ fontSize: '0.8rem' }}>Top Continent </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="mb-4" style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
+            <Col md={3} className="mb-4">
+              <Card style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
-                  <Card.Title style={{ fontSize: '1.5rem', fontWeight: 'bold' }}> {topFunding.topTag}</Card.Title>
-                  <Card.Text>Top Tag</Card.Text>
+                <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topTag}</Card.Title>
+                  <Card.Text style={{ fontSize: '0.8rem' }}>Top Tag</Card.Text>
+                  
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+
+          <Row>
+            <Col md={6} className="mb-4">
+              <Card>
+                <Card.Body>
+                  <Card.Title>Funding by Tag</Card.Title>
+                  <Bar data={lineData}
+                  options={{
+                    scales: {
+                      y: {
+                        ticks: {
+                          callback: (value) => formatMillions(value),
+                        },
+                        grid: {
+                          display: false, // Remove grid lines
+                        },
+                      },
+                      x: {
+                        grid: {
+                          display: false, // Remove grid lines
+                        },
+                      }
+                    },
+                  }} />
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={6} className="mb-4">
+              <Card>
+                <Card.Body>
+                  <Card.Title>Funding Raised Each Month (USD)</Card.Title>
+                  <Bar data={barData}
+                  options={{
+                    scales: {
+                      y: {
+                        ticks: {
+                          callback: (value) => formatMillions(value),
+                        },
+                        grid: {
+                          display: false, // Remove grid lines
+                        },
+                      },
+                      x: {
+                        grid: {
+                          display: false, // Remove grid lines
+                        },
+                      }
+                    },
+                  }}
+                  
+                  />
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
-              <Card className="mb-4">
+            <Col md={6} className="mb-4">
+              <Card>
                 <Card.Body>
-                  <Bar
-                    data={lineData}
-                    options={{
-                      scales: {
-                        y: {
-                          ticks: {
-                            callback: (value) => formatMillions(value),
-                          },
-                          grid: {
-                            display: false, // Remove grid lines
-                          },
-                        },
-                        x: {
-                          grid: {
-                            display: false, // Remove grid lines
-                          },
-                        }
-                      },
-                    }}
-                  />
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={6}>
-              <Card className="mb-4">
-                <Card.Body>
-                
-                  <Bar
-                    data={barData}
-                    options={{
-                      scales: {
-                        y: {
-                          ticks: {
-                            callback: (value) => formatMillions(value),
-                          },
-                          grid: {
-                            display: false, // Remove grid lines
-                          },
-                        },
-                        x: {
-                          grid: {
-                            display: false, // Remove grid lines
-                          },
-                        }
-                      },
-                    }}
-                  />
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <Card className="mb-4">
-                <Card.Body>
-                  
-                  <Bar
-                    data={regionBarData}
-                    options={{
-                      scales: {
-                        y: {
-                          ticks: {
-                            callback: (value) => formatMillions(value),
-                          },
-                          grid: {
-                            display: false, // Remove grid lines
-                          },
-                        },
-                        x: {
-                          grid: {
-                            display: false, // Remove grid lines
-                          },
-                        }
-                      },
-                    }}
-                  />
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={6}>
-              <Card className="mb-4">
-                <Card.Body>
-                  
+                  <Card.Title>Funding Type Distribution</Card.Title>
                   <Doughnut data={doughnutData} />
                 </Card.Body>
               </Card>
             </Col>
+            <Col md={6} className="mb-4">
+              <Card>
+                <Card.Body>
+                  <Card.Title>Funding by Region</Card.Title>
+                  <Bar data={regionBarData} 
+                  options={{
+                    scales: {
+                      y: {
+                        ticks: {
+                          callback: (value) => formatMillions(value),
+                        },
+                        grid: {
+                          display: false, // Remove grid lines
+                        },
+                      },
+                      x: {
+                        grid: {
+                          display: false, // Remove grid lines
+                        },
+                      }
+                    },
+                  }}
+                  
+                  />
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
+          
         </>
       )}
     </Container>

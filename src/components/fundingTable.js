@@ -14,6 +14,8 @@ function FundingTable({ rows }) {
     type: ''
   });
   const [sortOrder, setSortOrder] = useState('asc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
 
   useEffect(() => {
     applyFilters();
@@ -71,6 +73,7 @@ function FundingTable({ rows }) {
     }
 
     setFilteredRows(filtered);
+    setCurrentPage(1); // Reset to the first page when filters change
   };
 
   const handleSort = () => {
@@ -83,6 +86,14 @@ function FundingTable({ rows }) {
     setFilteredRows(sorted);
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const displayedRows = filteredRows.slice(startIndex, startIndex + rowsPerPage);
 
   return (
     <div className="container mt-4">
@@ -149,7 +160,7 @@ function FundingTable({ rows }) {
         </div>
       </div>
       <div className="table-responsive">
-        <table className="table table-hover">
+        <table className="table table-hover" style={{ fontSize: '0.8rem' }}>
           <thead style={{ backgroundColor: '#000', color: '#fff' }}>
             <tr>
               <th scope="col">Startup Name</th>
@@ -163,7 +174,7 @@ function FundingTable({ rows }) {
             </tr>
           </thead>
           <tbody>
-            {filteredRows.map((row) => (
+            {displayedRows.map((row) => (
               <tr key={row._id} onClick={() => handleRowClick(row)} style={{ cursor: 'pointer' }}>
                 <td>{row.startupName}</td>
                 <td className="text-right">{row.type}</td>
@@ -175,6 +186,27 @@ function FundingTable({ rows }) {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="d-flex justify-content-between">
+        <div>
+          Page {currentPage} of {totalPages}
+        </div>
+        <div>
+          <button
+            className="btn btn-primary"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            className="btn btn-primary ml-2"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

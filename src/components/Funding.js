@@ -26,10 +26,19 @@ function Funding() {
         <Button
           as={Link}
           to="/fundinganalysis"
-          className="text-left align-items-center btn btn-success gradient-button"
+          className="text-left align-items-center btn btn-success gradient-button mx-1"
         >
           Analyze Funding Trends
         </Button>
+
+        <Button
+          as={Link}
+          to="/ninefigure"
+          className="text-left align-items-center btn btn-success gradient-button mx-1"
+        >
+          9 figure club
+        </Button>
+
       </div>
 
       <FundingTable rows={fundingData} />

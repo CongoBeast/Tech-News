@@ -97,7 +97,7 @@ function RegionArticles() {
       
       <Row>
         {filteredArticles.map((article, idx) => (
-          <Col key={idx} md={6} lg={4} className="mb-4">
+          <Col key={idx} md={6} lg={4} className="mb-4" style={{ fontSize: '0.8rem' }}>
             <Card className="article-card">
               <Card.Body>
                 <Card.Title>{article.title}</Card.Title>

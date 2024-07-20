@@ -16,6 +16,7 @@ import FundingPage from './components/FundingPage';
 import ArticleEntry from './components/ArticleEntry';
 import FundingEntry from './components/fundingEntry'; // Import the ArticleEntry component
 import RegionArticles from './components/RegionArticles';
+import NineFigure from './components/ninefigure';
 import AuthPage from './components/AuthPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import TopNavBar from "./components/TopNavBar";
@@ -41,6 +42,8 @@ function App() {
 
             <Route path='/funding-page' element={<FundingPage />}/>
             <Route path='/articles-pages' element={<ArticlesPage/>}/>
+
+            <Route path='/ninefigure' element={<NineFigure/>}/>
 
             <Route path="/edit-article/:id" component={ArticleEntry} />
             <Route path="/edit-funding/:id" component={FundingEntry} />

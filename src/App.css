@@ -44,3 +44,21 @@ body {
 }
 
 
+.card {
+  border: none;
+  overflow: hidden;
+}
+
+.card-img-top {
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: bold;
+}

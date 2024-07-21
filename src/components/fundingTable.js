@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import { FaStepBackward , FaStepForward } from "react-icons/fa";
 
 function FundingTable({ rows }) {
   const navigate = useNavigate();
@@ -94,6 +95,9 @@ function FundingTable({ rows }) {
   const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
   const displayedRows = filteredRows.slice(startIndex, startIndex + rowsPerPage);
+
+
+  
 
   return (
     <div className="container mt-4">
@@ -192,20 +196,10 @@ function FundingTable({ rows }) {
           Page {currentPage} of {totalPages}
         </div>
         <div>
-          <button
-            className="btn btn-primary"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <button
-            className="btn btn-primary ml-2"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
+
+          <FaStepBackward className="edit-icon mx-2" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} />
+
+          <FaStepForward className="edit-icon mx-2" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} />
         </div>
       </div>
     </div>

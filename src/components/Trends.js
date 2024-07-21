@@ -44,7 +44,7 @@ function Trends() {
       const articles = response.data;
   
       // Process the data
-      const genres = ['AI', 'Blockchain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric'];
+      const genres = ['AI', 'BlockChain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric'];
       const continents = ['america', 'europe', 'asia', 'africa', 'middleeast'];
   
       const filteredArticles = articles.filter(article => {
@@ -143,7 +143,7 @@ function Trends() {
       <h2 className="my-4">Tech Trends</h2>
       <Row className="mb-4">
         <Col md={4}>
-          <DropdownButton id="dropdown-basic-button" title={region} onSelect={handleRegionSelect}>
+          <DropdownButton id="dropdown-basic-button" className="custom-dropdown-button" title={region} onSelect={handleRegionSelect}>
             <Dropdown.Item eventKey="All">All</Dropdown.Item>
             <Dropdown.Item eventKey="america">America</Dropdown.Item>
             <Dropdown.Item eventKey="europe">Europe</Dropdown.Item>
@@ -156,7 +156,7 @@ function Trends() {
           <DropdownButton id="dropdown-basic-button" title={genre} onSelect={handleGenreSelect}>
             <Dropdown.Item eventKey="All">All</Dropdown.Item>
             <Dropdown.Item eventKey="AI">AI</Dropdown.Item>
-            <Dropdown.Item eventKey="Blockchain">Blockchain</Dropdown.Item>
+            <Dropdown.Item eventKey="BlockChain">Blockchain</Dropdown.Item>
             <Dropdown.Item eventKey="IoT">IoT</Dropdown.Item>
             <Dropdown.Item eventKey="Aerospace">Aerospace</Dropdown.Item>
             <Dropdown.Item eventKey="Climate">Climate</Dropdown.Item>

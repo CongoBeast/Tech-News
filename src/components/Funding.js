@@ -13,11 +13,14 @@ function Funding() {
     axios.get('https://tech-news-backend.onrender.com/funding-news')
       .then(response => {
         setFundingData(response.data);
+        localStorage.setItem('fundingData', JSON.stringify(response.data));
       })
       .catch(error => {
         console.error('Error fetching funding data:', error);
       });
   }, []);
+
+  // console.log(JSON.parse(localStorage.getItem('fundingData')))
 
   return (
     <Container fluid className="home-container">
@@ -29,6 +32,14 @@ function Funding() {
           className="text-left align-items-center btn btn-success gradient-button mx-1"
         >
           Analyze Funding Trends
+        </Button>
+
+        <Button
+          as={Link}
+          to="/ninefigure"
+          className="text-left align-items-center btn btn-success gradient-button mx-1"
+        >
+          9 figure club
         </Button>
 
       </div>

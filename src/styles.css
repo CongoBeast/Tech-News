@@ -1,0 +1,44 @@
+/* styles.css */
+.admin-container {
+    padding: 20px;
+  }
+  
+  .write-article-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .write-article-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .edit-icon, .delete-icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .edit-icon:hover {
+    color: #007bff;
+  }
+  
+  .delete-icon:hover {
+    color: #dc3545;
+  }
+  
+  .card {
+    border: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  

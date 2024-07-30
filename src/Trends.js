@@ -143,7 +143,7 @@ function Trends() {
       <h2 className="my-4">Tech Trends</h2>
       <Row className="mb-4">
         <Col md={4}>
-          <DropdownButton id="dropdown-basic-button" title={region} onSelect={handleRegionSelect}>
+          <DropdownButton id="dropdown-basic-button" className="custom-dropdown-button" title={region} onSelect={handleRegionSelect}>
             <Dropdown.Item eventKey="All">All</Dropdown.Item>
             <Dropdown.Item eventKey="america">America</Dropdown.Item>
             <Dropdown.Item eventKey="europe">Europe</Dropdown.Item>

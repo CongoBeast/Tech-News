@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Dropdown } from 'react-bootstrap';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
-import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
+// import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
 

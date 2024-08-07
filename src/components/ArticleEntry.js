@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const regions = ['africa', 'asia', 'america', 'europe', 'middleeast'];
 const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles' , 
-  'BioTech' , 'Agric' , 'FinTech' , 'Logistics' , 'Regulation' , 'Manufacturing' 
+  'BioTech' , 'Agric' , 'FinTech' , 'Logistics' , 'Regulation' , 'Manufacturing' , 'Chips' , 'Telco'
 ];
 
 function LoadingOverlay({ message }) {

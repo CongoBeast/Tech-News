@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { IoMdBriefcase , IoMdGlobe } from "react-icons/io";
+import { Stack, Badge } from 'react-bootstrap';
 
 function StartupCard() {
   const location = useLocation();
@@ -9,6 +10,13 @@ function StartupCard() {
   const startup = location.state?.startup;
 
   const [similarStartups, setSimilarStartups] = React.useState([]);
+
+  const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+
+  const getRandomColor = () => {
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+  };
 
   React.useEffect(() => {
     if (startup) {
@@ -28,6 +36,8 @@ function StartupCard() {
     navigate(`/startup/${similarStartup._id}`, { state: { startup: similarStartup } });
   };
 
+  console.log(startup)
+
   if (!startup) {
     return <div>Loading...</div>;
   }
@@ -44,8 +54,13 @@ function StartupCard() {
               <h5 className="card-title"><strong>{startup.startupName}</strong></h5>
               <p className="card-text" style={{ fontSize: '0.8rem' }}>{startup.description}</p>
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Region: </strong>{startup.region}</p>
+              {startup.country && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Country: </strong>{startup.country}</p>}
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Stage: </strong>{startup.type}</p>
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Tag: </strong>{startup.tag}</p>
+
+              {/* {startup.keyWords && <p>{startup.keyWords}</p>} */}
+
+              
 
               <a href={startup.siteLink} className='mx-3' style={{ textDecoration: 'none', color: 'inherit' }}>
                 <IoMdGlobe style={{ marginRight: '5px' }}/>
@@ -56,6 +71,14 @@ function StartupCard() {
                 <IoMdBriefcase style={{ marginRight: '5px' }} />
                 <span>Work here!</span>
               </a>
+
+              <Stack direction="horizontal" gap={2} className='mt-2'>
+                {startup.keyWords.map((keyword, index) => (
+                  <Badge key={index} pill bg={getRandomColor()} text={keyword === 'light' ? 'dark' : ''}>
+                    {keyword}
+                  </Badge>
+                ))}
+              </Stack>
               
             </div>
           </div>

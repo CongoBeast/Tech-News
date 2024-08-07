@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaPaste } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
 
 const regions = ['africa', 'asia', 'america', 'europe', 'middleeast'];
 const fundingType = ['Seed' ,'Pre-seed'  , 'Pre-series B', 'Pre-series A', 'Series A', 'Series B', 'Series C', 'Series D' , 'Other'];
@@ -21,30 +22,60 @@ function LoadingOverlay({ message }) {
   );
 }
 
-function processArticleData(articleData) {
-  // Define the regex to capture the title and the article text, ignoring the date
-  const regex = /^(## .+?)\s+\*\*Published:.*?\*\*\s+([\s\S]+)/;
-  
-  // Execute the regex on the input data
-  const match = articleData.match(regex);
-
-  if (match) {
-    const title = match[1];
-    const text = match[2].trim();
-    
-    return { title, text };
-  } else {
-    throw new Error('The article data format is incorrect or does not match the expected pattern.');
-  }
-}
-
-
-
 function FundingEntry() {
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+
+  const options = [
+    { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'Beauty', label: 'Beauty' },
+    { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Health', label: 'Health' },
+    { value: 'Education', label: 'Education' },
+
+    { value: 'PropTech', label: 'PropTech' },
+    { value: 'PropTech', label: 'Item5' },
+    { value: 'RealEstate', label: 'RealEstate' },
+    { value: 'B2B', label: 'B2B' },
+    { value: 'Transport', label: 'Transport' },
+
+    { value: 'Finance', label: 'Finance' },
+    { value: 'Digital finance', label: 'Digital finance' },
+    { value: 'Accessibility', label: 'Accessibility' },
+    { value: 'Lending', label: 'Lending' },
+    { value: 'Cryptocurrency', label: 'Cryptocurrency' },
+    { value: 'Regtech', label: 'Regtech' },
+    { value: 'Insurtech', label: 'Insurtech' },
+    { value: 'Wealthtech', label: 'Wealthtech' },
+    { value: 'BNPL', label: 'BNPL' },
+    { value: 'Cloud computing', label: 'Cloud computing' },
+    { value: 'Data analytics', label: 'Data analytics' },
+
+    { value: 'GenAI', label: 'GenAI' },
+    { value: 'AI', label: 'AI' },
+    { value: 'Climate', label: 'Climate' },
+    { value: 'Carbon', label: 'Carbon' },
+    { value: 'Defense', label: 'Defense' },
+    { value: 'Battery', label: 'Battery' },
+    { value: 'Cyber Security', label: 'Cyber Security' },
+    { value: 'Travel Tech', label: 'Travel Tech' }
+
+  ];
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  const handleKeyWordChange = (selectedOptions) => {
+    setSelectedItems(selectedOptions || []);
+    setFundingData({ ...fundingData, keyWords: selectedOptions ? selectedOptions.map(item => item.value) : [] });
+  };
+
+  const removeItem = (itemToRemove) => {
+    const updatedItems = selectedItems.filter(item => item.value !== itemToRemove.value);
+    setSelectedItems(selectedItems.filter(item => item.value !== itemToRemove.value));
+    setFundingData({ ...fundingData, keyWords: updatedItems.map(item => item.value) });
+  };
+
 
   const userString = localStorage.getItem('user');
 
@@ -64,7 +95,8 @@ function FundingEntry() {
     week: '',
     month: '',
     year: '',
-    username: userString
+    username: userString,
+    keyWords: []
   });
 
   useEffect(() => {
@@ -107,7 +139,9 @@ function FundingEntry() {
     setLoading(true);
     setLoadingMessage('Submitting...');
 
-    axios.post('https://tech-news-backend.onrender.com/submit-funding-news', fundingData)
+    const dataToSubmit = { ...fundingData, keyWords: selectedItems.map(item => item.value) };
+
+    axios.post('https://tech-news-backend.onrender.com/submit-funding-news',  dataToSubmit)
       .then((response) => {
         toast.success('Funding news submitted');
         setFundingData({
@@ -126,7 +160,8 @@ function FundingEntry() {
           week: '',
           month: '',
           year: '',
-          username: userString
+          username: userString,
+          keyWords: []
         });
         navigate('/admin');
       })
@@ -200,8 +235,17 @@ function FundingEntry() {
       // console.log(geminiData[0].careers_page_link)
       navigator.clipboard.writeText(geminiData[0].careers_page_link)
     };
+
+  
+    
     
 
+      
+    
+
+
+      // console.log(selectedItems)
+    
     
 // careers_page_link
 
@@ -210,8 +254,35 @@ function FundingEntry() {
       {loading && <LoadingOverlay message={loadingMessage} />}
       <h2 className="my-4">Enter Funding News</h2>
 
+    <Row>
+      <Col md={9}>
+        <Select
+          options={options}
+          isMulti
+          value={selectedItems}
+          onChange={handleKeyWordChange}
+          className="mb-3"
+        />
+        <div>
+          {selectedItems.map(item => (
+            <span key={item.value} className="badge badge-pill badge-primary mr-2">
+              {item.value}
+              <button
+                type="button"
+                className="close ml-2 primary"
+                aria-label="Close"
+                onClick={() => removeItem(item)}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </span>
+          ))}
+        </div>
+      </Col>
+    </Row>
+
       <ToastContainer />
-      <Row className="my-4">
+      {/* <Row className="my-4">
         <Col md={4}>
           <Form.Group controlId="articleLink">
             <Form.Label>Article Link</Form.Label>
@@ -248,14 +319,14 @@ function FundingEntry() {
             <Button variant={isCareerClicked ? "primary" : "success" } className='mx-2' onClick={clickCareerFunction}>Careers</Button>
             <Button variant={isNameClicked ? "primary" : "success" } onClick={clickNameFunction}>Name</Button>
         </Col>
-
+      </Row> */}
         {/* <Col md={4} className="d-flex align-items-end">
             <Button variant={isSummaryClicked ? "primary" : "success"} className='mx-2' onClick={clickSummaryFunction}>Summary</Button>
             <Button variant={isCareerClicked ? "primary" : "success" } onClick={clickCareerFunction}>Careers</Button>
             <Button variant={isNameClicked ? "primary" : "success" } onClick={clickNameFunction}>Name</Button>
         </Col> */}
-      </Row>
-      <Row className="my-4">
+
+      {/* <Row className="my-4">
         <Col>
           <Form.Group controlId="summaryResult">
             <Form.Label>Summary Result</Form.Label>
@@ -267,7 +338,7 @@ function FundingEntry() {
             />
           </Form.Group>
         </Col>
-      </Row>
+      </Row> */}
 
 
 

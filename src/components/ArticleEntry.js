@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const regions = ['africa', 'asia', 'america', 'europe', 'middleeast'];
 const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles' , 
-  'BioTech' , 'Agric' , 'FinTech' , 'Logistics'
+  'BioTech' , 'Agric' , 'FinTech' , 'Logistics' , 'Regulation' , 'Manufacturing' 
 ];
 
 function LoadingOverlay({ message }) {
@@ -115,6 +115,7 @@ function ArticleEntry() {
           region: '',
           title: '',
           article: '',
+          country: '',
           date: '',
           week: '',
           month: '',
@@ -284,7 +285,7 @@ function ArticleEntry() {
 
       <Form>
         <Row>
-          <Col md={4}>
+          <Col md={3}>
             <Form.Group controlId="_id" className="mb-3">
               <Form.Label>ID</Form.Label>
               <Form.Control
@@ -295,7 +296,7 @@ function ArticleEntry() {
               />
             </Form.Group>
           </Col>
-          <Col md={4}>
+          <Col md={3}>
             <Form.Group controlId="tag" className="mb-3">
               <Form.Label>Tag</Form.Label>
               <Form.Control
@@ -312,7 +313,7 @@ function ArticleEntry() {
             </Form.Group>
           </Col>
 
-          <Col md={4}>
+          <Col md={3}>
             <Form.Group controlId="region" className="mb-3">
               <Form.Label>Region</Form.Label>
               <Form.Control
@@ -328,6 +329,21 @@ function ArticleEntry() {
               </Form.Control>
             </Form.Group>
           </Col>
+
+          <Col md={3}>
+            <Form.Group controlId="country" className="mb-3">
+              <Form.Label>Country</Form.Label>
+              <div className="d-flex">
+                <Form.Control
+                  type="text"
+                  name="country"
+                  value={articleData.country}
+                  onChange={handleChange}
+                />
+              </div>
+            </Form.Group>
+          </Col>
+
         </Row>
 
         <Row>

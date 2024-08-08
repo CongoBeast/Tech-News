@@ -30,46 +30,78 @@ function FundingEntry() {
 
   const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'Solar', label: 'Solar' },
+    { value: 'Battery', label: 'Battery' },
+    
     { value: 'Beauty', label: 'Beauty' },
     { value: 'Manufacturing', label: 'Manufacturing' },
-    { value: 'Health', label: 'Health' },
+    
     { value: 'Education', label: 'Education' },
 
-    { value: 'PropTech', label: 'PropTech' },
     { value: 'Logistics', label: 'Logistics' },
-    { value: 'RealEstate', label: 'RealEstate' },
-    { value: 'B2B', label: 'B2B' },
+    { value: 'Supply Chain', label: 'Supply Chain' },
     { value: 'Transport', label: 'Transport' },
 
+    { value: 'BioTech', label: 'BioTech' },
+    { value: 'Health', label: 'Health' },
+    { value: 'Drug Discovery', label: 'Drug Discovery' },
+    { value: 'Pharmaceuticals', label: 'Pharmaceuticals' },
+    { value: 'Mental Health', label: 'Mental Health' },
+
+    { value: 'PropTech', label: 'PropTech' },
+    { value: 'RealEstate', label: 'RealEstate' },
+    
+    { value: 'B2B', label: 'B2B' },
+    { value: 'B2C', label: 'B2C' },
+    { value: 'Paas', label: 'Paas' },
+    
     { value: 'Finance', label: 'Finance' },
     { value: 'Digital finance', label: 'Digital finance' },
     { value: 'Accessibility', label: 'Accessibility' },
     { value: 'Lending', label: 'Lending' },
-    { value: 'Cryptocurrency', label: 'Cryptocurrency' },
     { value: 'Regtech', label: 'Regtech' },
     { value: 'Insurtech', label: 'Insurtech' },
     { value: 'Wealthtech', label: 'Wealthtech' },
     { value: 'BNPL', label: 'BNPL' },
+    
+    { value: 'Cryptocurrency', label: 'Cryptocurrency' },
+    { value: 'Bitcoin', label: 'Bitcoin' },
+    { value: 'DeFi', label: 'DeFi' },
+
     { value: 'Cloud computing', label: 'Cloud computing' },
     { value: 'Data analytics', label: 'Data analytics' },
+    { value: 'Big Data', label: 'Big Data' },
+    { value: 'Quantum Computing', label: 'Quantum Computing' },
 
+    { value: 'Construction', label: 'Construction' },
     { value: 'Mining', label: 'Mining' },
-    { value: 'BioTech', label: 'BioTech' },
+
     { value: 'Gaming', label: 'Gaming' },
     { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Paas', label: 'Paas' },
+    { value: 'Media', label: 'Media' },
+    
     { value: 'Robotics', label: 'Robotics' },
     { value: 'MotorVehicles', label: 'MotorVehicles' },
+    { value: 'ElectricalVehicles', label: 'ElectricalVehicles' },
+    { value: 'Telecommunications', label: 'Telecommunications' },
+    { value: 'Digital Marketing', label: 'Digital Marketing' },
+
+    { value: 'Aircraft', label: 'Aircraft' },
+    { value: 'Space', label: 'Space' },
+    { value: 'Defense', label: 'Defense' },
+    { value: 'FossilFuels', label: 'FossilFuels' },
 
     { value: 'GenAI', label: 'GenAI' },
     { value: 'AI', label: 'AI' },
+    
     { value: 'Climate', label: 'Climate' },
     { value: 'Carbon', label: 'Carbon' },
     { value: 'Defense', label: 'Defense' },
-    { value: 'Battery', label: 'Battery' },
+    
     { value: 'Cyber Security', label: 'Cyber Security' },
-    { value: 'Travel Tech', label: 'Travel Tech' }
-
+    { value: 'Travel Tech', label: 'Travel Tech' },
+    { value: 'Food & Beverage', label: 'Food & Beverage' }
+  
   ];
 
   const [selectedItems, setSelectedItems] = useState([]);

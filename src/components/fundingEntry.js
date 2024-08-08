@@ -36,7 +36,7 @@ function FundingEntry() {
     { value: 'Education', label: 'Education' },
 
     { value: 'PropTech', label: 'PropTech' },
-    { value: 'PropTech', label: 'Item5' },
+    { value: 'Logistics', label: 'Logistics' },
     { value: 'RealEstate', label: 'RealEstate' },
     { value: 'B2B', label: 'B2B' },
     { value: 'Transport', label: 'Transport' },
@@ -52,6 +52,14 @@ function FundingEntry() {
     { value: 'BNPL', label: 'BNPL' },
     { value: 'Cloud computing', label: 'Cloud computing' },
     { value: 'Data analytics', label: 'Data analytics' },
+
+    { value: 'Mining', label: 'Mining' },
+    { value: 'BioTech', label: 'BioTech' },
+    { value: 'Gaming', label: 'Gaming' },
+    { value: 'Entertainment', label: 'Entertainment' },
+    { value: 'Paas', label: 'Paas' },
+    { value: 'Robotics', label: 'Robotics' },
+    { value: 'MotorVehicles', label: 'MotorVehicles' },
 
     { value: 'GenAI', label: 'GenAI' },
     { value: 'AI', label: 'AI' },

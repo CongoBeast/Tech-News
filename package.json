@@ -9,6 +9,7 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
+    "chartjs-chart-treemap": "^2.3.1",
     "mapbox-gl": "^3.5.1",
     "mui": "^0.0.1",
     "react": "^18.3.1",
@@ -19,6 +20,7 @@
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",
     "web-vitals": "^2.1.4"
   },

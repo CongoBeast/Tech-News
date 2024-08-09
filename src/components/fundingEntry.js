@@ -30,27 +30,50 @@ function FundingEntry() {
 
   const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'Energy', label: 'Energy' },
+    { value: 'Solar', label: 'Solar' },
+    
     { value: 'Beauty', label: 'Beauty' },
     { value: 'Manufacturing', label: 'Manufacturing' },
     { value: 'Health', label: 'Health' },
+    { value: 'Mental Health', label: 'Mental Health' },
+    { value: 'Drug Discovery', label: 'Drug Discovery' },
+    
     { value: 'Education', label: 'Education' },
+    { value: 'Gaming', label: 'Gaming' },
+    { value: 'Entertainment', label: 'Entertainment' },
+    { value: 'Media', label: 'Media' },
+    { value: 'Advertising', label: 'Advertising' },
+    { value: 'Virtual Reality', label: 'Virtual Reality' },
+    
 
     { value: 'PropTech', label: 'PropTech' },
-    { value: 'PropTech', label: 'Item5' },
+    { value: 'Investing', label: 'Investing' },
     { value: 'RealEstate', label: 'RealEstate' },
+    
     { value: 'B2B', label: 'B2B' },
+    { value: 'Saas', label: 'Saas' },
+    { value: 'Paas', label: 'Paas' },
+    { value: 'Retail', label: 'Retail' },
+    { value: 'Agriculture', label: 'Agriculture' },
+    { value: 'Robotics', label: 'Robotics' },
+    
     { value: 'Transport', label: 'Transport' },
+    { value: 'Logistics', label: 'Logistics' },
 
     { value: 'Finance', label: 'Finance' },
     { value: 'Digital finance', label: 'Digital finance' },
     { value: 'Accessibility', label: 'Accessibility' },
     { value: 'Lending', label: 'Lending' },
     { value: 'Cryptocurrency', label: 'Cryptocurrency' },
+    
     { value: 'Regtech', label: 'Regtech' },
     { value: 'Insurtech', label: 'Insurtech' },
     { value: 'Wealthtech', label: 'Wealthtech' },
     { value: 'BNPL', label: 'BNPL' },
+    
     { value: 'Cloud computing', label: 'Cloud computing' },
+    { value: 'Quantum Computing', label: 'Quantum Computing' },
     { value: 'Data analytics', label: 'Data analytics' },
 
     { value: 'GenAI', label: 'GenAI' },
@@ -60,7 +83,16 @@ function FundingEntry() {
     { value: 'Defense', label: 'Defense' },
     { value: 'Battery', label: 'Battery' },
     { value: 'Cyber Security', label: 'Cyber Security' },
-    { value: 'Travel Tech', label: 'Travel Tech' }
+    
+    { value: 'Travel Tech', label: 'Travel Tech' },
+    { value: 'Electric Vehicles', label: 'Electric Vehicles' },
+    { value: 'Mining', label: 'Mining' },
+    { value: 'HRTech', label: 'HRTech' },
+    { value: 'Social', label: 'Social' },
+    
+    { value: 'Air Travel', label: 'Air Travel' },
+    { value: 'Space', label: 'Space' }
+    
 
   ];
 

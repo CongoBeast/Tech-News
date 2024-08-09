@@ -32,6 +32,10 @@ function FundingEntry() {
     { value: 'Hydrogen', label: 'Hydrogen' },
     { value: 'Energy', label: 'Energy' },
     { value: 'Solar', label: 'Solar' },
+    { value: 'Semi Conductors', label: 'Semi Conductors' },
+    { value: 'Clothing', label: 'Clothing' },
+    { value: 'Fashion', label: 'Fashion' },
+    
     
     { value: 'Beauty', label: 'Beauty' },
     { value: 'Manufacturing', label: 'Manufacturing' },
@@ -45,6 +49,7 @@ function FundingEntry() {
     { value: 'Media', label: 'Media' },
     { value: 'Advertising', label: 'Advertising' },
     { value: 'Virtual Reality', label: 'Virtual Reality' },
+    { value: 'Ecomm', label: 'Ecomm' },
     
 
     { value: 'PropTech', label: 'PropTech' },

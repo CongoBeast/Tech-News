@@ -55,6 +55,8 @@ function StartupCard() {
               <p className="card-text" style={{ fontSize: '0.8rem' }}>{startup.description}</p>
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Region: </strong>{startup.region}</p>
               {startup.country && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Country: </strong>{startup.country}</p>}
+              {startup.founders && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Founders: </strong>{startup.founders}</p>}
+              {startup.backers && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Backers: </strong>{startup.backers}</p>}
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Stage: </strong>{startup.type}</p>
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Tag: </strong>{startup.tag}</p>
 
@@ -72,13 +74,13 @@ function StartupCard() {
                 <span>Work here!</span>
               </a>
 
-              <Stack direction="horizontal" gap={2} className='mt-2'>
+              {startup.keyWords && <Stack direction="horizontal" gap={2} className='mt-2'>
                 {startup.keyWords.map((keyword, index) => (
                   <Badge key={index} pill bg={getRandomColor()} text={keyword === 'light' ? 'dark' : ''}>
                     {keyword}
                   </Badge>
                 ))}
-              </Stack>
+              </Stack>}
               
             </div>
           </div>

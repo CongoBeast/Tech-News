@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Form, Modal } from 'react-bootstrap';
+import { Button, Table, Form, Modal, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import Select from 'react-select';
 
 function FundingPage() {
   const [fundingEntries, setFundingEntries] = useState([]);
@@ -10,6 +11,81 @@ function FundingPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedBackers, setSelectedBackers] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [inputBackers, setInputBacker] = useState('');
+  
+  const handleKeyDown = (e) => {
+      if (e.key === 'Enter' && inputValue.trim() !== '') {
+        setSelectedItems([...selectedItems, { value: inputValue.trim() }]);
+        setInputValue('');
+      }
+    };
+
+  const handleKeyDownBackers = (e) => {
+      if (e.key === 'Enter' && inputBackers.trim() !== '') {
+        setSelectedBackers([...selectedBackers, { value: inputBackers.trim() }]);
+        setInputBacker('');
+      }
+    };
+  
+  const removeItem = (itemToRemove) => {
+      setSelectedItems(selectedItems.filter(item => item.value !== itemToRemove.value));
+    };
+  const removeBacker = (itemToRemove) => {
+      setSelectedBackers(selectedBackers.filter(item => item.value !== itemToRemove.value));
+    };
+
+    const options = [
+      { value: 'Hydrogen', label: 'Hydrogen' },
+      { value: 'Beauty', label: 'Beauty' },
+      { value: 'Manufacturing', label: 'Manufacturing' },
+      { value: 'Health', label: 'Health' },
+      { value: 'Education', label: 'Education' },
+  
+      { value: 'PropTech', label: 'PropTech' },
+      { value: 'PropTech', label: 'Item5' },
+      { value: 'RealEstate', label: 'RealEstate' },
+      { value: 'B2B', label: 'B2B' },
+      { value: 'Transport', label: 'Transport' },
+  
+      { value: 'Finance', label: 'Finance' },
+      { value: 'Digital finance', label: 'Digital finance' },
+      { value: 'Accessibility', label: 'Accessibility' },
+      { value: 'Lending', label: 'Lending' },
+      { value: 'Cryptocurrency', label: 'Cryptocurrency' },
+      { value: 'Regtech', label: 'Regtech' },
+      { value: 'Insurtech', label: 'Insurtech' },
+      { value: 'Wealthtech', label: 'Wealthtech' },
+      { value: 'BNPL', label: 'BNPL' },
+      { value: 'Cloud computing', label: 'Cloud computing' },
+      { value: 'Data analytics', label: 'Data analytics' },
+  
+      { value: 'GenAI', label: 'GenAI' },
+      { value: 'AI', label: 'AI' },
+      { value: 'Climate', label: 'Climate' },
+      { value: 'Carbon', label: 'Carbon' },
+      { value: 'Defense', label: 'Defense' },
+      { value: 'Battery', label: 'Battery' },
+      { value: 'Cyber Security', label: 'Cyber Security' },
+      { value: 'Travel Tech', label: 'Travel Tech' }
+  
+    ];
+
+
+    const [selectedIndustry, setSelectedIndustry] = useState([]);
+    const handleKeyWordChange = (selectedOptions) => {
+      setSelectedIndustry(selectedOptions || []);
+      // setFundingData({ ...fundingData, keyWords: selectedOptions ? selectedOptions.map(item => item.value) : [] });
+    };
+
+    const removeIndustry = (itemToRemove) => {
+      // const updatedItems = selectedIndustry.filter(item => item.value !== itemToRemove.value);
+      setSelectedIndustry(selectedIndustry.filter(item => item.value !== itemToRemove.value));
+      // setFundingData({ ...fundingData, keyWords: updatedItems.map(item => item.value) });
+    };
 
   useEffect(() => {
     fetchFundingEntries();
@@ -37,8 +113,16 @@ function FundingPage() {
   };
 
   const handleEditSubmit = (e) => {
+
+    const updatedEntry = {
+      ...selectedEntry,
+      founders: selectedItems.map(item => item.value),
+      backers: selectedBackers.map(item => item.value),
+      keyWords: selectedIndustry.map(item => item.value), // Add selected founders to the entry
+    };
+
     e.preventDefault();
-    axios.post('https://tech-news-backend.onrender.com/update-funding-entry', selectedEntry)
+    axios.post('https://tech-news-backend.onrender.com/update-funding-entry', updatedEntry)
       .then(() => {
         fetchFundingEntries();
         setShowEditModal(false);
@@ -102,7 +186,37 @@ function FundingPage() {
         </Modal.Header>
         <Modal.Body>
           {selectedEntry && (
+
             <Form onSubmit={handleEditSubmit}>
+
+            <Row>
+                  <Col md={9}>
+                    <Select
+                      options={options}
+                      isMulti
+                      value={selectedIndustry}
+                      onChange={handleKeyWordChange}
+                      className="mb-3"
+                    />
+                    <div>
+                      {selectedIndustry.map(item => (
+                        <span key={item.value} className="badge text-black badge-pill badge-primary mr-2">
+                          {item.value}
+                          <button
+                            type="button"
+                            className="close ml-2 primary"
+                            aria-label="Close"
+                            onClick={() => removeIndustry(item)}
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </Col>
+                </Row>
+
+
               <Form.Group controlId="startupName" className="mb-3">
                 <Form.Label>Startup Name</Form.Label>
                 <Form.Control
@@ -139,20 +253,68 @@ function FundingPage() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+
               <Form.Group controlId="founders" className="mb-3">
                 <Form.Label>Founders</Form.Label>
-                <Form.Control
+                <input
                   type="text"
-                  name="founders"
                   value={selectedEntry.founders}
-                  onChange={handleEditChange}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="form-control mb-3"
+                  placeholder="Type and press Enter"
                 />
+                <div>
+                  {selectedItems.map(item => (
+                    <span key={item.value} className="badge text-black badge-pill badge-primary mr-2">
+                      {item.value}
+                      <button
+                        type="button"
+                        className="close ml-2"
+                        aria-label="Close"
+                        onClick={() => removeItem(item)}
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </span>
+                  ))}
+                </div>
               </Form.Group>
+
+              <Form.Group controlId="backers" className="mb-3">
+                <Form.Label>Backers</Form.Label>
+                <input
+                  type="text"
+                  value={selectedEntry.backers}
+                  onChange={(e) => setInputBacker(e.target.value)}
+                  onKeyDown={handleKeyDownBackers}
+                  className="form-control mb-3"
+                  placeholder="Type and press Enter"
+                />
+                <div>
+                  {selectedBackers.map(item => (
+                    <span key={item.value} className="badge text-black badge-pill badge-primary mr-2">
+                      {item.value}
+                      <button
+                        type="button"
+                        className="close ml-2"
+                        aria-label="Close"
+                        onClick={() => removeBacker(item)}
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </Form.Group>
+
               {/* Include other fields here */}
               <Button variant="primary" type="submit">
                 Save Changes
               </Button>
             </Form>
+
+
           )}
         </Modal.Body>
       </Modal>

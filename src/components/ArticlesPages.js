@@ -8,6 +8,7 @@ import ArticleTable from './ArticleTable';
 function ArticlesPages() {
   return (
     <div className="container">
+      
       <ArticleTable/>
     </div>
   );

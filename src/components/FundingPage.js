@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, Modal, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import Select from 'react-select';
 
+
 function FundingPage() {
+  const navigate = useNavigate();
   const [fundingEntries, setFundingEntries] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
@@ -16,6 +18,37 @@ function FundingPage() {
   const [selectedBackers, setSelectedBackers] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [inputBackers, setInputBacker] = useState('');
+
+  const fundingType = ['Seed' ,'Pre-seed'  , 'Pre-series B', 'Pre-series A', 'Series A', 'Series B', 'Series C', 'Series D' , 'Other'];
+
+
+  // Adding funding rounds
+  const [fundingRounds, setFundingRounds] = useState([
+    { dateFounded: '', fundingType: '', amount: '' }
+  ]);
+
+  const handleDateChange = (index, value) => {
+    const updatedRounds = [...fundingRounds];
+    updatedRounds[index].dateFounded = value;
+    setFundingRounds(updatedRounds);
+  };
+
+  const handleTypeChange = (index, value) => {
+    const updatedRounds = [...fundingRounds];
+    updatedRounds[index].fundingType = value;
+    setFundingRounds(updatedRounds);
+  };
+
+  const handleAmountChange = (index, value) => {
+    const updatedRounds = [...fundingRounds];
+    updatedRounds[index].amount = value;
+    setFundingRounds(updatedRounds);
+  };
+
+  const handleAddRound = () => {
+    setFundingRounds([...fundingRounds, { dateFounded: '', fundingType: '', amount: '' }]);
+  };
+  // Adding funding rounds
   
   const handleKeyDown = (e) => {
       if (e.key === 'Enter' && inputValue.trim() !== '') {
@@ -40,27 +73,54 @@ function FundingPage() {
 
     const options = [
       { value: 'Hydrogen', label: 'Hydrogen' },
+      { value: 'Energy', label: 'Energy' },
+      { value: 'Solar', label: 'Solar' },
+      { value: 'Semi Conductors', label: 'Semi Conductors' },
+      { value: 'Clothing', label: 'Clothing' },
+      { value: 'Fashion', label: 'Fashion' },
+      
       { value: 'Beauty', label: 'Beauty' },
       { value: 'Manufacturing', label: 'Manufacturing' },
       { value: 'Health', label: 'Health' },
+      { value: 'Mental Health', label: 'Mental Health' },
+      { value: 'Drug Discovery', label: 'Drug Discovery' },
+      
       { value: 'Education', label: 'Education' },
+      { value: 'Gaming', label: 'Gaming' },
+      { value: 'Entertainment', label: 'Entertainment' },
+      { value: 'Media', label: 'Media' },
+      { value: 'Advertising', label: 'Advertising' },
+      { value: 'Virtual Reality', label: 'Virtual Reality' },
+      { value: 'Ecomm', label: 'Ecomm' },
+      
   
       { value: 'PropTech', label: 'PropTech' },
-      { value: 'PropTech', label: 'Item5' },
+      { value: 'Investing', label: 'Investing' },
       { value: 'RealEstate', label: 'RealEstate' },
+      
       { value: 'B2B', label: 'B2B' },
+      { value: 'Saas', label: 'Saas' },
+      { value: 'Paas', label: 'Paas' },
+      { value: 'Retail', label: 'Retail' },
+      { value: 'Agriculture', label: 'Agriculture' },
+      { value: 'Robotics', label: 'Robotics' },
+      
       { value: 'Transport', label: 'Transport' },
+      { value: 'Logistics', label: 'Logistics' },
   
       { value: 'Finance', label: 'Finance' },
       { value: 'Digital finance', label: 'Digital finance' },
       { value: 'Accessibility', label: 'Accessibility' },
       { value: 'Lending', label: 'Lending' },
       { value: 'Cryptocurrency', label: 'Cryptocurrency' },
+      
       { value: 'Regtech', label: 'Regtech' },
       { value: 'Insurtech', label: 'Insurtech' },
       { value: 'Wealthtech', label: 'Wealthtech' },
       { value: 'BNPL', label: 'BNPL' },
+      
       { value: 'Cloud computing', label: 'Cloud computing' },
+      { value: 'Quantum Computing', label: 'Quantum Computing' },
       { value: 'Data analytics', label: 'Data analytics' },
   
       { value: 'GenAI', label: 'GenAI' },
@@ -70,7 +130,15 @@ function FundingPage() {
       { value: 'Defense', label: 'Defense' },
       { value: 'Battery', label: 'Battery' },
       { value: 'Cyber Security', label: 'Cyber Security' },
-      { value: 'Travel Tech', label: 'Travel Tech' }
+      
+      { value: 'Travel Tech', label: 'Travel Tech' },
+      { value: 'Electric Vehicles', label: 'Electric Vehicles' },
+      { value: 'Mining', label: 'Mining' },
+      { value: 'HRTech', label: 'HRTech' },
+      { value: 'Social', label: 'Social' },
+      
+      { value: 'Air Travel', label: 'Air Travel' },
+      { value: 'Space', label: 'Space' }
   
     ];
 
@@ -118,7 +186,8 @@ function FundingPage() {
       ...selectedEntry,
       founders: selectedItems.map(item => item.value),
       backers: selectedBackers.map(item => item.value),
-      keyWords: selectedIndustry.map(item => item.value), // Add selected founders to the entry
+      keyWords: selectedIndustry.map(item => item.value),
+      rounds: fundingRounds.map(item => item.value), // Add selected founders to the entry
     };
 
     e.preventDefault();
@@ -141,6 +210,14 @@ function FundingPage() {
     entry.startupName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const randomColor = (index) =>{
+    return (index % 2 === 1) ? 'lightgrey' : 'white';
+  }
+
+  const handleRowClick = (row) => {
+    navigate(`/edit-funding-entry/${row._id}`, { state: { startup: row } });
+  };
+
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-4">Funding Entries</h1>
@@ -161,18 +238,22 @@ function FundingPage() {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Type</th>
             <th>Date</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredFundingEntries.map(entry => (
-            <tr key={entry._id}>
+            <tr key={entry._id} onClick={() => handleRowClick(entry)} style={{ cursor: 'pointer' }}>
               <td>{entry.startupName}</td>
+              <td>{entry.type}</td>
               <td>{entry.date}</td>
               <td>
                 <FaEdit className="edit-icon mx-2" onClick={() => { setSelectedEntry(entry); setShowEditModal(true); }} />
-                <FaTrashAlt className="delete-icon mx-2" onClick={() => { setSelectedEntry(entry); setShowDeleteModal(true); }} />
+                <FaTrashAlt className="delete-icon mx-2"  onClick={() => { setSelectedEntry(entry); setShowDeleteModal(true); }} />
+                {/* <FaTrashAlt className="delete-icon mx-2"  /> */}
+
               </td>
             </tr>
           ))}
@@ -189,7 +270,8 @@ function FundingPage() {
 
             <Form onSubmit={handleEditSubmit}>
 
-            <Row>
+              <Form.Label>Industries</Form.Label>
+                <Row>
                   <Col md={9}>
                     <Select
                       options={options}
@@ -261,6 +343,12 @@ function FundingPage() {
                   value={selectedEntry.founders}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  //  onKeyDown={(e) => {
+                  //   if (e.key === 'Enter') {
+                  //     e.preventDefault();
+                  //     handleKeyDown(e);  // Call the handler on Enter key press
+                  //   }
+                  // }}
                   className="form-control mb-3"
                   placeholder="Type and press Enter"
                 />
@@ -288,6 +376,12 @@ function FundingPage() {
                   value={selectedEntry.backers}
                   onChange={(e) => setInputBacker(e.target.value)}
                   onKeyDown={handleKeyDownBackers}
+                  // onKeyDown={(e) => {
+                  //   if (e.key === 'Enter') {
+                  //     e.preventDefault();
+                  //     handleKeyDownBackers(e);  // Call the handler on Enter key press
+                  //   }
+                  // }}
                   className="form-control mb-3"
                   placeholder="Type and press Enter"
                 />
@@ -308,6 +402,50 @@ function FundingPage() {
                 </div>
               </Form.Group>
 
+              <Row>
+              {fundingRounds.map((round, index) => (
+                  <div key={index}  style={{backgroundColor: randomColor(index)}}>
+                    <Col md={12}>
+                      <Form.Group controlId={`dateFounded-${index}`} className="mb-3">
+                        <Form.Label>Date Funded</Form.Label>
+                        <Form.Control
+                          type="date"
+                          value={round.dateFounded}
+                          onChange={(e) => handleDateChange(index, e.target.value)}
+                        />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={12}>
+                      <Form.Group controlId={`fundingType-${index}`} className="mb-3">
+                        <Form.Label>Funding Type</Form.Label>
+                        <Form.Control
+                          as="select"
+                          value={round.fundingType}
+                          onChange={(e) => handleTypeChange(index, e.target.value)}
+                        >
+                          <option value="">Select funding type</option>
+                          {fundingType.map((region) => (
+                              <option key={region} value={region}>{region}</option>
+                            ))}
+                          {/* Add your options dynamically here */}
+                        </Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Form.Group controlId={`amount-${index}`} className="mb-3">
+                      <Form.Label>Amount</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={round.amount}
+                        onChange={(e) => handleAmountChange(index, e.target.value)}
+                       />
+                    </Form.Group>
+                  </div>
+                ))}
+                <Button variant="success"  className='mb-3' onClick={handleAddRound}>Add Funding Round</Button>
+              </Row>
+
+
               {/* Include other fields here */}
               <Button variant="primary" type="submit">
                 Save Changes
@@ -318,7 +456,7 @@ function FundingPage() {
           )}
         </Modal.Body>
       </Modal>
-
+ 
       {/* Delete Modal */}
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
         <Modal.Header closeButton>

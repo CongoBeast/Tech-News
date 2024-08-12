@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate , Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { IoMdBriefcase , IoMdGlobe } from "react-icons/io";
-import { Stack, Badge } from 'react-bootstrap';
+import { Stack, Badge , Row , Col, Card, Breadcrumb } from 'react-bootstrap';
 
 function StartupCard() {
   const location = useLocation();
@@ -11,11 +11,16 @@ function StartupCard() {
 
   const [similarStartups, setSimilarStartups] = React.useState([]);
 
-  const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+  const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
 
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
+  };
+
+  const formatMillions = value => {
+    if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
+    return `$${(value / 1e6).toFixed(1)}M`;
   };
 
   React.useEffect(() => {
@@ -36,18 +41,36 @@ function StartupCard() {
     navigate(`/startup/${similarStartup._id}`, { state: { startup: similarStartup } });
   };
 
-  console.log(startup)
+  // console.log(startup)
 
   if (!startup) {
     return <div>Loading...</div>;
   }
 
   return (
+
+
     <div className="container mt-4">
+
+      {/* Breadcrumbs */}
+      <Breadcrumb className='p-3 rounded'>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
+          <Badge bg="primary">Home</Badge>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/funding' }}>
+        <Badge bg="primary">Startup List</Badge>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+           <Badge bg="dark">{startup.startupName}</Badge>
+        </Breadcrumb.Item>
+      </Breadcrumb>
+
+
+
       <div className="card mb-3" style={{ borderRadius: '15px', overflow: 'hidden' }}>
         <div className="row no-gutters">
           <div className="col-md-4">
-            <img src={startup.imageLink} className="card-img aspect-ratio" alt="founder" style={{ borderRadius: '15px 0 0 15px', height: '100%' }} />
+            <img src={startup.imageLink} className="card-img aspect-ratio" alt="founder" style={{ borderRadius: '15px 0 0 15px', height: '50%' }} />
           </div>
           <div className="col-md-8">
             <div className="card-body">
@@ -55,14 +78,35 @@ function StartupCard() {
               <p className="card-text" style={{ fontSize: '0.8rem' }}>{startup.description}</p>
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Region: </strong>{startup.region}</p>
               {startup.country && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Country: </strong>{startup.country}</p>}
+              {startup.dateFounded && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Founded: </strong>{startup.dateFounded}</p>}
               {startup.founders && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Founders: </strong>{startup.founders}</p>}
-              {startup.backers && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Backers: </strong>{startup.backers}</p>}
+              {startup.backers && <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Backers: </strong>{startup.backers.join(', ')}</p>}
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Stage: </strong>{startup.type}</p>
               <p className="card-text" style={{ fontSize: '0.7rem' }}><strong>Tag: </strong>{startup.tag}</p>
 
               {/* {startup.keyWords && <p>{startup.keyWords}</p>} */}
 
-              
+              <Row>
+                <Col md={3} className='align-items-center m-4'>
+                  <Card style={{ background: '#a2c1f5' , color: 'Black' }}>
+                    <Card.Body>
+                      <Card.Title>{formatMillions(startup.size)}</Card.Title>
+                      <Card.Text style={{ fontSize: '0.8rem' }}>Latest round size</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+
+                <Col md={3} className='align-items-center m-4'>
+                  <Card style={{ background: '#f5b9a2' , color: 'Black' }}>
+                    <Card.Body>
+                      <Card.Title>{startup.date}</Card.Title>
+                      <Card.Text style={{ fontSize: '0.8rem' }} >Round date</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+
+              </Row>
+
 
               <a href={startup.siteLink} className='mx-3' style={{ textDecoration: 'none', color: 'inherit' }}>
                 <IoMdGlobe style={{ marginRight: '5px' }}/>

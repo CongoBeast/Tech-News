@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Dropdown } from 'react-bootstrap';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
-// import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
+import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
+import TreemapModal from './TreemapModal.js';
 
 // Register the required chart components
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend);
@@ -24,6 +25,12 @@ function FundingAnalysis() {
   const [region, setRegion] = useState('');
   const [tag, setTag] = useState('');
   const [type, setType] = useState('');
+
+  const [treemapType , setTreemapType] = useState([])
+  const [treemapRegion , setTreemapRegion] = useState([])
+  const [treemapTags , setTreemapTags] = useState([])
+  // const [treemapTags , setTreemapTags] = useState([])
+
 
   useEffect(() => {
     fetchFundingData();
@@ -176,6 +183,11 @@ function FundingAnalysis() {
     };
 
     // console.log(type)
+    // console.log(types)
+    setTreemapType(types.map((round, index) => ({ name: round, value: typeSummaries[index],})))
+    setTreemapRegion(continents.map((round, index) => ({ name: round, value: typeSummaries[index],})))
+
+    
 
     setLineData(lineChartData);
     setBarData(barChartData);
@@ -188,6 +200,34 @@ function FundingAnalysis() {
     if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
     return `$${(value / 1e6).toFixed(1)}M`;
   };
+
+  const [showModal, setShowModal] = useState(false);
+  const [treemapData, setTreemapData] = useState(null);
+
+
+  // console.log(treemapType)
+
+
+  const handleCardClick = () => {
+    // Set your treemap data here
+    
+      const data = {
+        name: "Funding",
+        children: treemapType
+      };
+      setTreemapData(data);
+      setShowModal(true);
+
+  }
+
+  const handleCardClickRegion = () => {
+    const data = {
+      name: "Funding",
+      children: treemapRegion
+    };
+    setTreemapData(data);
+    setShowModal(true);
+  }
 
   return (
     <Container fluid>
@@ -252,7 +292,7 @@ function FundingAnalysis() {
 
           <Row className='justify-content-center'>
             <Col md={2} className="mb-4">
-              <Card style={{ background: 'linear-gradient(to right, #2f2f33, #2575fc)', color: 'white' }}>
+              <Card  style={{ background: 'linear-gradient(to right, #2f2f33, #2575fc)', color: 'white' }}>
                 <Card.Body>
                   <Card.Title style={{ fontSize: '1.8rem' }}>{formatMillions(topFunding.highestFunding)}</Card.Title>
                   <Card.Text style={{ fontSize: '0.8rem' }}>Highest Funding </Card.Text>
@@ -260,7 +300,7 @@ function FundingAnalysis() {
               </Card>
             </Col>
             <Col md={2} className="mb-4">
-              <Card style={{ background: 'linear-gradient(to right, #2575fc, #420f41', color: 'white' }}>
+              <Card  style={{ background: 'linear-gradient(to right, #2575fc, #420f41', color: 'white' }}>
                 <Card.Body>
                   <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topContinent}</Card.Title>
                   <Card.Text style={{ fontSize: '0.8rem' }}>Top Continent </Card.Text>
@@ -268,7 +308,7 @@ function FundingAnalysis() {
               </Card>
             </Col>
             <Col md={2} className="mb-4">
-              <Card style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
+              <Card  style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
                 <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topTag}</Card.Title>
                   <Card.Text style={{ fontSize: '0.8rem' }}>Top Tag</Card.Text>
@@ -276,7 +316,7 @@ function FundingAnalysis() {
               </Card>
             </Col>
             <Col md={2} className="mb-4">
-              <Card style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
+              <Card  style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
                 <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topType}</Card.Title>
                   <Card.Text style={{ fontSize: '0.8rem' }}>Top Type</Card.Text>
@@ -388,6 +428,12 @@ function FundingAnalysis() {
               </Card>
             </Col>
           </Row>
+
+          <TreemapModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        data={treemapData}
+      />
           
         </>
       )}

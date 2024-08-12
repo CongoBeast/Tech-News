@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Dropdown, Modal } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Container, Row, Col, Card, Button, Dropdown, Modal , Breadcrumb, Badge } from 'react-bootstrap';
+import { useParams, Link } from 'react-router-dom';
 import './RegionArticles.css';
 
 const genres = ['All', 'AI', 'BlockChain', 'Cybersecurity', 'IoT', 'Energy', 'Military'];
@@ -61,6 +61,21 @@ function RegionArticles() {
 
   return (
     <Container fluid className="region-articles-container">
+
+            {/* Breadcrumbs */}
+      <Breadcrumb className='p-3 rounded'>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
+          <Badge bg="primary">Home</Badge>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
+        <Badge bg="primary">Regions</Badge>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+           <Badge bg="dark">{region.charAt(0).toUpperCase() + region.slice(1)}</Badge>
+        </Breadcrumb.Item>
+      </Breadcrumb>
+
+
       <h2 className="my-4 text-center">{region.charAt(0).toUpperCase() + region.slice(1)}</h2>
       <p className="text-center">{selectedPeriod}</p>
       <div className="d-flex justify-content-center mb-4">

@@ -9,18 +9,41 @@ import { Link, useLocation } from "react-router-dom";
 function Funding() {
   const [fundingData, setFundingData] = useState([]);
 
-  useEffect(() => {
-    axios.get('https://tech-news-backend.onrender.com/funding-news')
-      .then(response => {
-        setFundingData(response.data);
-        localStorage.setItem('fundingData', JSON.stringify(response.data));
-      })
-      .catch(error => {
-        console.error('Error fetching funding data:', error);
-      });
-  }, []);
+    // console.log(JSON.parse(localStorage.getItem('fundingData')))
+    // if(JSON.parse(localStorage.getItem('fundingData'))){
+    //   setFundingData(JSON.parse(localStorage.getItem('fundingData')))
+    // }
 
-  // console.log(JSON.parse(localStorage.getItem('fundingData')))
+  // useEffect(() => {
+  //   axios.get('https://tech-news-backend.onrender.com/funding-news')
+  //     .then(response => {
+  //       setFundingData(response.data);
+  //       localStorage.setItem('fundingData', JSON.stringify(response.data));
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching funding data:', error);
+  //     });
+  // }, []);
+
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('fundingData'));
+
+    if (storedData && storedData.length > 0) {
+      // Use data from local storage
+      setFundingData(storedData);
+    } else {
+      // Fetch data from the API if not available in local storage
+      axios.get('https://tech-news-backend.onrender.com/funding-news')
+        .then(response => {
+          setFundingData(response.data);
+          localStorage.setItem('fundingData', JSON.stringify(response.data));
+        })
+        .catch(error => {
+          console.error('Error fetching funding data:', error);
+        });
+    }
+  }, []);
 
   return (
     <Container fluid className="home-container">
@@ -34,13 +57,13 @@ function Funding() {
           Analyze Funding Trends
         </Button>
 
-        <Button
+        {/* <Button
           as={Link}
           to="/ninefigure"
           className="text-left align-items-center btn btn-success gradient-button mx-1"
         >
           9 figure club
-        </Button>
+        </Button> */}
 
       </div>
 

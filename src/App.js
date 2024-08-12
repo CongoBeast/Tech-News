@@ -20,6 +20,7 @@ import NineFigure from './components/ninefigure';
 import AuthPage from './components/AuthPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import TopNavBar from "./components/TopNavBar";
+import EditFundingEntry from './components/EditFundingEntry';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <TopNavBar />
           <Routes>
             <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/trends" element={<Trends />} />
             <Route path="/about" element={<About />} />
             <Route path="/region" element={<Region />} />
@@ -54,6 +56,7 @@ function App() {
 
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/article-entry" element={<ArticleEntry />} />
+            <Route path="/edit-funding-entry/:id" element={<EditFundingEntry />} />
             <Route path="/funding-entry" element={<FundingEntry />} /> {/* Add the route for the article entry page */}
             <Route path="/region/:region" element={<RegionArticles />} />  {/* Add RegionArticles route */}
           </Routes>

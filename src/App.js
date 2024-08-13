@@ -21,6 +21,7 @@ import AuthPage from './components/AuthPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import TopNavBar from "./components/TopNavBar";
 import EditFundingEntry from './components/EditFundingEntry';
+import SearchArticle from './components/searchArticle'
 
 
 function App() {
@@ -56,6 +57,9 @@ function App() {
 
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/article-entry" element={<ArticleEntry />} />
+
+            <Route path="/search-articles" element={<SearchArticle />} />
+
             <Route path="/edit-funding-entry/:id" element={<EditFundingEntry />} />
             <Route path="/funding-entry" element={<FundingEntry />} /> {/* Add the route for the article entry page */}
             <Route path="/region/:region" element={<RegionArticles />} />  {/* Add RegionArticles route */}

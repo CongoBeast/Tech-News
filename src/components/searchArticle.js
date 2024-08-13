@@ -52,7 +52,7 @@ function SearchArticle() {
 
             <h2 className="my-4 text-center">Search all articles here</h2>
 
-            <Row>
+            <Row className='d-flex justify-content-center align-items-center'>
                 <Col md={4}>
                     <Form.Control
                         type="text"

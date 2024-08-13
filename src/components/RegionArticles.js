@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button, Dropdown, Modal , Breadcrumb, Badge,
 import { useParams, Link } from 'react-router-dom';
 import './RegionArticles.css';
 
-const genres = ['All', 'AI', 'BlockChain', 'Cybersecurity', 'IoT', 'Energy', 'Military'];
+const genres = ['All', 'AI', 'BlockChain', 'Cybersecurity', 'BioTech', 'Energy', 'Military'];
 
 function RegionArticles() {
   const today = new Date();

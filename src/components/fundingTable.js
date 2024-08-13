@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { FaStepBackward , FaStepForward } from "react-icons/fa";
+import { Button, Table, Form, Modal, Row, Col, Card } from 'react-bootstrap';
+
+
 
 function FundingTable({ rows }) {
   const navigate = useNavigate();
@@ -16,7 +19,7 @@ function FundingTable({ rows }) {
   });
   const [sortOrder, setSortOrder] = useState('asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 16;
 
   useEffect(() => {
     applyFilters();
@@ -97,6 +100,37 @@ function FundingTable({ rows }) {
   const displayedRows = filteredRows.slice(startIndex, startIndex + rowsPerPage);
 
 
+  const generateFileName = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `cordelia_${year}-${month}-${day}.csv`;
+  };
+
+  var fileName = generateFileName()
+
+  // console.log(displayedRows) 
+  const convertToCSV = (array) => {
+    const headers = Object.keys(array[0]).join(','); // Extract headers
+    const rows = array.map(row => 
+      Object.values(row).map(value => `"${value}"`).join(',')
+    ).join('\n'); // Convert each object to a CSV row
+
+    return `${headers}\n${rows}`;
+  };
+
+  const downloadCSV = () => {
+    const csvData = convertToCSV(filteredRows);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }; 
   
 
   return (
@@ -162,8 +196,17 @@ function FundingTable({ rows }) {
             className="form-control"
           />
         </div>
+      
+      <Row>
+        <Col>
+          <Button className='success m-3' onClick={downloadCSV}>
+            Export as CSV
+          </Button>
+        </Col>
+      </Row>
+
       </div>
-      <div className="table-responsive">
+      {/* <div className="table-responsive">
         <table className="table table-hover" style={{ fontSize: '0.8rem' }}>
           <thead style={{ backgroundColor: '#000', color: '#fff' }}>
             <tr>
@@ -190,18 +233,50 @@ function FundingTable({ rows }) {
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="d-flex justify-content-between">
-        <div>
-          Page {currentPage} of {totalPages}
-        </div>
-        <div>
+      </div> */}
 
-          <FaStepBackward className="edit-icon mx-2" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} />
 
-          <FaStepForward className="edit-icon mx-2" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} />
+        <Row className='d-flex justify-content-center align-items-center'>
+          {displayedRows.map((row) => (
+                <Card onClick={() => handleRowClick(row)} className='m-3' style={{ width: '12rem', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer' }}>
+
+                <Row noGutters={true} className="d-flex align-items-center">
+                  <Col xs={4}>
+                    <Card.Img 
+                      src={row.imageLink} 
+                      style={{ borderRadius: '0', height: '100%', objectFit: 'cover' }}
+                    />
+                  </Col>
+
+                  <Col xs={8}>
+                    <Card.Body>
+                      <Card.Title>{row.startupName}</Card.Title>
+                      <Card.Text style={{ fontSize: '0.8rem' }}>
+                        {row.type}
+                      </Card.Text>
+                      <Card.Text style={{ fontSize: '0.8rem' }}>
+                        ${formatSize(row.size)}
+                      </Card.Text>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
+
+            ))}
+        </Row>
+
+        <div className="d-flex justify-content-between">
+          <div>
+            Page {currentPage} of {totalPages}
+          </div>
+          <div>
+
+            <FaStepBackward className="edit-icon mx-2" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} />
+
+            <FaStepForward className="edit-icon mx-2" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} />
+          </div>
         </div>
-      </div>
+      
     </div>
   );
 }

@@ -2,19 +2,21 @@ import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import './Home.css'; // Import the CSS file for custom styles
 import { Link } from 'react-router-dom';
+import { IoSearchSharp } from "react-icons/io5";
+
 
 function Home() {
   return (
     <Container fluid className="home-container">
       <h2 className="my-4 text-center">Tech News, but better.</h2>
 
-      <Button 
-        as={Link}
-        to="/search-articles"
-        className="text-left align-items-center btn btn-success gradient-button my-4"
-      >
-        Search Articles
-      </Button>
+      <Row className='d-flex justify-content-center align-items-center'>
+        <Col>
+          <Button as={Link} to="/search-articles" className="text-left align-items-center btn btn-success gradient-button my-4">
+            Search Articles <IoSearchSharp />
+          </Button>
+        </Col>
+      </Row>
 
       <Row className="justify-content-center">
         {[

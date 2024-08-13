@@ -43,9 +43,9 @@ function Sidebar() {
       className="flex-column d-none d-lg-block sidebar"
     >
       <Navbar.Brand as={Link} to="/">
-        <img src="https://github.com/CongoBeast/Tech-News/blob/master/src/components/tech-week.png?raw=true" 
+        <img src="https://github.com/CongoBeast/Tech-News/blob/master/public/cordelia.png?raw=true" 
         alt="Imat Tech Logo"
-          style={{ maxHeight: "50px", maxWidth: "50px" }}
+          style={{  width: "160px" , height: "80px" }}
           className="d-flex align-items-center"
         />
       </Navbar.Brand>

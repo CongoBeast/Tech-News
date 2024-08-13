@@ -9,23 +9,6 @@ import { Link, useLocation } from "react-router-dom";
 function Funding() {
   const [fundingData, setFundingData] = useState([]);
 
-    // console.log(JSON.parse(localStorage.getItem('fundingData')))
-    // if(JSON.parse(localStorage.getItem('fundingData'))){
-    //   setFundingData(JSON.parse(localStorage.getItem('fundingData')))
-    // }
-
-  // useEffect(() => {
-  //   axios.get('https://tech-news-backend.onrender.com/funding-news')
-  //     .then(response => {
-  //       setFundingData(response.data);
-  //       localStorage.setItem('fundingData', JSON.stringify(response.data));
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching funding data:', error);
-  //     });
-  // }, []);
-
-
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('fundingData'));
 

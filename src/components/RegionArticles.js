@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Dropdown, Modal , Breadcrumb, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Dropdown, Modal , Breadcrumb, Badge, Stack } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
 import './RegionArticles.css';
 
@@ -32,6 +32,14 @@ function RegionArticles() {
     setSelectedPeriod(`${month} ${year}, Week ${week}`);
     setShowModal(false);
   };
+
+  const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
+
+  const getRandomColor = () => {
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+  };
+
 
   useEffect(() => {
     fetchArticles();
@@ -123,6 +131,15 @@ function RegionArticles() {
                 <a href={article.link} className="btn btn-link p-0 mt-2">
                   Read full article
                 </a>
+
+                {article.keyWords && <Stack direction="horizontal" gap={2} className='mt-2'>
+                {article.keyWords.map((keyword, index) => (
+                  <Badge key={index} pill bg={getRandomColor()} text={keyword === 'light' ? 'dark' : ''}>
+                    {keyword}
+                  </Badge>
+                ))}
+              </Stack>}
+
               </Card.Body>
             </Card>
           </Col>

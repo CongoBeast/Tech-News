@@ -5,6 +5,7 @@ import { useNavigate , Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaPaste } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
 
 const regions = ['africa', 'asia', 'america', 'europe', 'middleeast'];
 const tags = ['AI', 'BlockChain', 'Security', 'Aerospace', 'Climate', 'Energy', 'Military', 'MotorVehicles' , 
@@ -26,6 +27,7 @@ function ArticleEntry() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const userString = localStorage.getItem('user');
   
@@ -41,7 +43,8 @@ function ArticleEntry() {
     month: '',
     year: '',
     status: '',
-    username: userString
+    username: userString,
+    keyWords: []
   });
 
   const [stats, setStats] = useState({
@@ -49,6 +52,54 @@ function ArticleEntry() {
     numberOfDrafts: 0,
     numberOfPostsThisWeek: 0
   });
+
+  const options = [
+    { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'Beauty', label: 'Beauty' },
+    { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Health', label: 'Health' },
+    { value: 'Education', label: 'Education' },
+
+    { value: 'PropTech', label: 'PropTech' },
+    { value: 'PropTech', label: 'Item5' },
+    { value: 'RealEstate', label: 'RealEstate' },
+    { value: 'B2B', label: 'B2B' },
+    { value: 'Transport', label: 'Transport' },
+
+    { value: 'Finance', label: 'Finance' },
+    { value: 'Digital finance', label: 'Digital finance' },
+    { value: 'Accessibility', label: 'Accessibility' },
+    { value: 'Lending', label: 'Lending' },
+    { value: 'Cryptocurrency', label: 'Cryptocurrency' },
+    { value: 'Regtech', label: 'Regtech' },
+    { value: 'Insurtech', label: 'Insurtech' },
+    { value: 'Wealthtech', label: 'Wealthtech' },
+    { value: 'BNPL', label: 'BNPL' },
+    { value: 'Cloud computing', label: 'Cloud computing' },
+    { value: 'Data analytics', label: 'Data analytics' },
+
+    { value: 'GenAI', label: 'GenAI' },
+    { value: 'AI', label: 'AI' },
+    { value: 'Climate', label: 'Climate' },
+    { value: 'Carbon', label: 'Carbon' },
+    { value: 'Defense', label: 'Defense' },
+    { value: 'Battery', label: 'Battery' },
+    { value: 'Cyber Security', label: 'Cyber Security' },
+    { value: 'Travel Tech', label: 'Travel Tech' }
+
+  ];
+
+  const handleKeyWordChange = (selectedOptions) => {
+    setSelectedItems(selectedOptions || []);
+    setArticleData({ ...articleData, keyWords: selectedOptions ? selectedOptions.map(item => item.value) : [] });
+  };
+
+  const removeItem = (itemToRemove) => {
+    const updatedItems = selectedItems.filter(item => item.value !== itemToRemove.value);
+    setSelectedItems(selectedItems.filter(item => item.value !== itemToRemove.value));
+    setArticleData({ ...articleData, keyWords: updatedItems.map(item => item.value) });
+  };
+
 
   useEffect(() => {
     generateId();
@@ -101,11 +152,15 @@ function ArticleEntry() {
 
   const handleSubmit = (e, status) => {
     e.preventDefault();
+
     const updatedArticleData = { ...articleData, status };
+
+    const dataToSubmit = { ...updatedArticleData, keyWords: selectedItems.map(item => item.value) };
+    
     setLoading(true);
     setLoadingMessage(status === 'Posted' ? 'Submitting...' : 'Saving...');
 
-    axios.post('https://tech-news-backend.onrender.com/submit-article', updatedArticleData)
+    axios.post('https://tech-news-backend.onrender.com/submit-article', dataToSubmit)
       .then((response) => {
         toast.success(status === 'Posted' ? 'Article posted' : 'Draft saved');
         setArticleData({
@@ -121,7 +176,8 @@ function ArticleEntry() {
           month: '',
           year: '',
           status: '',
-          username: userString
+          username: userString,
+          keyWords: []
         });
         fetchStats();
         navigate('/admin');
@@ -211,6 +267,15 @@ function ArticleEntry() {
       {loading && <LoadingOverlay message={loadingMessage} />}
       <h2 className="my-4">Enter New Article</h2>
 
+      <Button
+        as={Link}
+        to="/articles-pages"
+        className="btn btn-primary my-4"
+        style={{ marginRight: "1rem" }}
+      >
+        View and Edit Articles
+      </Button>
+
       <Row className="my-4">
         <Col md={3}>
           <Form.Group controlId="articleLink">
@@ -274,14 +339,34 @@ function ArticleEntry() {
         </Col>
       </Row> */}
 
-      <Button
-        as={Link}
-        to="/articles-pages"
-        className="btn btn-primary my-4"
-        style={{ marginRight: "1rem" }}
-      >
-        View and Edit Articles
-      </Button>
+
+
+      <Row>
+          <Col md={4}>
+            <Select
+              options={options}
+              isMulti
+              value={selectedItems}
+              onChange={handleKeyWordChange}
+              className="mb-3"
+            />
+            <div>
+              {selectedItems.map(item => (
+                <span key={item.value} className="badge text-black badge-pill badge-primary mr-2">
+                  {item.value}
+                  <button
+                    type="button"
+                    className="close ml-2 primary"
+                    aria-label="Close"
+                    onClick={() => removeItem(item)}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </span>
+              ))}
+            </div>
+          </Col>
+        </Row>
 
       <Form>
         <Row>

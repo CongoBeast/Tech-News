@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import './Home.css'; // Import the CSS file for custom styles
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,15 @@ function Home() {
   return (
     <Container fluid className="home-container">
       <h2 className="my-4 text-center">Tech News, but better.</h2>
+
+      <Button 
+        as={Link}
+        to="/search-articles"
+        className="text-left align-items-center btn btn-success gradient-button my-4"
+      >
+        Search Articles
+      </Button>
+
       <Row className="justify-content-center">
         {[
           { name: 'Africa', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3uM6QBzNk_T8fGzs_DNnYNc7h-FmE5q8OQQ&s' },

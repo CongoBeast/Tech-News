@@ -30,55 +30,27 @@ function FundingEntry() {
 
   const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
-    { value: 'Energy', label: 'Energy' },
-    { value: 'Solar', label: 'Solar' },
-    { value: 'Semi Conductors', label: 'Semi Conductors' },
-    { value: 'Clothing', label: 'Clothing' },
-    { value: 'Fashion', label: 'Fashion' },
-    
-    
     { value: 'Beauty', label: 'Beauty' },
     { value: 'Manufacturing', label: 'Manufacturing' },
     { value: 'Health', label: 'Health' },
-    { value: 'Mental Health', label: 'Mental Health' },
-    { value: 'Drug Discovery', label: 'Drug Discovery' },
-    
     { value: 'Education', label: 'Education' },
-    { value: 'Gaming', label: 'Gaming' },
-    { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Media', label: 'Media' },
-    { value: 'Advertising', label: 'Advertising' },
-    { value: 'Virtual Reality', label: 'Virtual Reality' },
-    { value: 'Ecomm', label: 'Ecomm' },
-    
 
     { value: 'PropTech', label: 'PropTech' },
-    { value: 'Investing', label: 'Investing' },
+    { value: 'PropTech', label: 'Item5' },
     { value: 'RealEstate', label: 'RealEstate' },
-    
     { value: 'B2B', label: 'B2B' },
-    { value: 'Saas', label: 'Saas' },
-    { value: 'Paas', label: 'Paas' },
-    { value: 'Retail', label: 'Retail' },
-    { value: 'Agriculture', label: 'Agriculture' },
-    { value: 'Robotics', label: 'Robotics' },
-    
     { value: 'Transport', label: 'Transport' },
-    { value: 'Logistics', label: 'Logistics' },
 
     { value: 'Finance', label: 'Finance' },
     { value: 'Digital finance', label: 'Digital finance' },
     { value: 'Accessibility', label: 'Accessibility' },
     { value: 'Lending', label: 'Lending' },
     { value: 'Cryptocurrency', label: 'Cryptocurrency' },
-    
     { value: 'Regtech', label: 'Regtech' },
     { value: 'Insurtech', label: 'Insurtech' },
     { value: 'Wealthtech', label: 'Wealthtech' },
     { value: 'BNPL', label: 'BNPL' },
-    
     { value: 'Cloud computing', label: 'Cloud computing' },
-    { value: 'Quantum Computing', label: 'Quantum Computing' },
     { value: 'Data analytics', label: 'Data analytics' },
 
     { value: 'GenAI', label: 'GenAI' },
@@ -88,16 +60,7 @@ function FundingEntry() {
     { value: 'Defense', label: 'Defense' },
     { value: 'Battery', label: 'Battery' },
     { value: 'Cyber Security', label: 'Cyber Security' },
-    
-    { value: 'Travel Tech', label: 'Travel Tech' },
-    { value: 'Electric Vehicles', label: 'Electric Vehicles' },
-    { value: 'Mining', label: 'Mining' },
-    { value: 'HRTech', label: 'HRTech' },
-    { value: 'Social', label: 'Social' },
-    
-    { value: 'Air Travel', label: 'Air Travel' },
-    { value: 'Space', label: 'Space' }
-    
+    { value: 'Travel Tech', label: 'Travel Tech' }
 
   ];
 
@@ -128,6 +91,7 @@ function FundingEntry() {
     siteLink: '',
     description: '',
     careersLink: '',
+    dateFounded: '',
     date: '',
     week: '',
     month: '',
@@ -198,6 +162,7 @@ function FundingEntry() {
           month: '',
           year: '',
           username: userString,
+          dateFounded: '',
           keyWords: []
         });
         navigate('/admin');
@@ -382,7 +347,7 @@ function FundingEntry() {
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col md={4}>
-            <Form.Group controlId="_id" className="mb-3">
+            <Form.Group controlId="_id" className="">
               <Form.Label>ID</Form.Label>
               <Form.Control
                 type="text"
@@ -393,7 +358,7 @@ function FundingEntry() {
             </Form.Group>
           </Col>
           <Col md={4}>
-            <Form.Group controlId="startupName" className="mb-3">
+            <Form.Group controlId="startupName" className="">
               <Form.Label>Startup Name</Form.Label>
               <Form.Control
                 type="text"
@@ -419,7 +384,7 @@ function FundingEntry() {
                 ))}
             </Form.Group> */}
 
-            <Form.Group controlId="type" className="mb-3">
+            <Form.Group controlId="type" className="">
               <Form.Label>Type</Form.Label>
               <Form.Control
                 as="select"
@@ -438,7 +403,7 @@ function FundingEntry() {
         </Row>
 
         <Row>
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="size" className="mb-3">
               <Form.Label>Size ($)</Form.Label>
               <Form.Control
@@ -450,13 +415,25 @@ function FundingEntry() {
             </Form.Group>
           </Col>
 
-          <Col md={6}>
+          <Col md={4}>
             <Form.Group controlId="country" className="mb-3">
               <Form.Label>Country</Form.Label>
               <Form.Control
                 type="text"
                 name="country"
                 value={fundingData.country}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={4}>
+            <Form.Group controlId="date" className="mb-3">
+              <Form.Label>Founding Date</Form.Label>
+              <Form.Control
+                type="date"
+                name="date"
+                value={fundingData.dateFounded}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -499,7 +476,7 @@ function FundingEntry() {
           
           <Col md={4}>
             <Form.Group controlId="date" className="mb-3">
-              <Form.Label>Date</Form.Label>
+              <Form.Label>Funding Date</Form.Label>
               <Form.Control
                 type="date"
                 name="date"

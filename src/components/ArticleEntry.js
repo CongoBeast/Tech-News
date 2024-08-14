@@ -53,38 +53,113 @@ function ArticleEntry() {
     numberOfPostsThisWeek: 0
   });
 
-  const options = [
+ const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'Solar', label: 'Solar' },
+    { value: 'Clean Energy', label: 'Clean Energy' },
+    { value: 'Sustainability', label: 'Sustainability' },
+    { value: 'Green Tech', label: 'Green Tech' },
+    { value: 'Climate', label: 'Climate' },
+    { value: 'Carbon', label: 'Carbon' },
+    { value: 'Environmental, social and governance', label: 'Environmental, social and governance' },
+    { value: 'Decarbonization', label: 'Decarbonization' },
+    { value: 'Biofuels', label: 'Biofuels' },    
+
     { value: 'Beauty', label: 'Beauty' },
+    { value: 'Fitness', label: 'Fitness' },
+    { value: 'Suppliments', label: 'Suppliments' },
+    { value: 'Wellness', label: 'Wellness' },
+    { value: 'Lifestyle', label: 'Lifestyle' },
+
+
     { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Chips', label: 'Chips' },
+    { value: 'Semi-conductors', label: 'Semi-conductors' },
+    { value: 'Chemistry', label: 'Chemistry' },
+
     { value: 'Health', label: 'Health' },
+    { value: 'Tele Health', label: 'Tele Health' },
+    { value: 'Medical Device', label: 'Medical Device' },
+    { value: 'Drug Discovery', label: 'Drug Discovery' },
+    { value: 'Pharma', label: 'Pharma' },
+    { value: 'Health data analytics', label: 'Health data analytics' },
+    { value: 'Genomics', label: 'Genomics' },
+    { value: 'Digital health', label: 'Digital health' },
+
+
     { value: 'Education', label: 'Education' },
 
-    { value: 'PropTech', label: 'PropTech' },
-    { value: 'PropTech', label: 'Item5' },
-    { value: 'RealEstate', label: 'RealEstate' },
+    { value: 'Gaming', label: 'Gaming' },
+    { value: 'Entertainment', label: 'Entertainment' },
+    { value: 'Media', label: 'Media' },
+    { value: 'Sport', label: 'Sport' },
+    { value: 'Music', label: 'Music' },
+
+
+    { value: 'B2C', label: 'B2C' },
     { value: 'B2B', label: 'B2B' },
+    { value: 'Saas', label: 'Saas' },
+    { value: 'Paas', label: 'Paas' },
+
+
+    { value: 'Minerals', label: 'Minerals' },
+    { value: 'Mining', label: 'Mining' },
+
+
+    { value: 'Ecommerce', label: 'Ecommerce' },
+    { value: 'Food and Beverage', label: 'Food and Beverage' },
+    { value: 'Clothing', label: 'Clothing' },
+    { value: 'Fashion', label: 'Fashion' },
+    { value: 'Restaurant', label: 'Restaurant' },
+
+    { value: 'RealEstate', label: 'RealEstate' },
+
     { value: 'Transport', label: 'Transport' },
+    { value: 'Logistics', label: 'Logistics' },
 
     { value: 'Finance', label: 'Finance' },
     { value: 'Digital finance', label: 'Digital finance' },
     { value: 'Accessibility', label: 'Accessibility' },
     { value: 'Lending', label: 'Lending' },
+    { value: 'PropTech', label: 'PropTech' },
+    { value: 'HRTech', label: 'HRTech' },
+
     { value: 'Cryptocurrency', label: 'Cryptocurrency' },
     { value: 'Regtech', label: 'Regtech' },
     { value: 'Insurtech', label: 'Insurtech' },
     { value: 'Wealthtech', label: 'Wealthtech' },
     { value: 'BNPL', label: 'BNPL' },
+    { value: 'Digital Banking', label: 'Digital Banking' },
+    { value: 'Investing', label: 'Investing' },
+
+
     { value: 'Cloud computing', label: 'Cloud computing' },
+    { value: 'Quantum computing', label: 'Quantum computing' },
+    { value: 'DevOps', label: 'DevOps' },
     { value: 'Data analytics', label: 'Data analytics' },
 
     { value: 'GenAI', label: 'GenAI' },
     { value: 'AI', label: 'AI' },
-    { value: 'Climate', label: 'Climate' },
-    { value: 'Carbon', label: 'Carbon' },
+    { value: 'Robotics', label: 'Robotics' },
+    { value: 'Internet of Things (IoT)', label: 'Internet of Things (IoT)' },
+    { value: 'Automation', label: 'Automation' },
+    { value: 'Big data', label: 'Big data' },
+    { value: 'Serverless computing', label: 'Serverless computing' },
+    { value: 'Cloud security', label: 'Cloud security' },
+
     { value: 'Defense', label: 'Defense' },
+    { value: 'Millitary', label: 'Millitary' },
+
     { value: 'Battery', label: 'Battery' },
+    { value: 'Charging stations', label: 'Charging stations' },
+    { value: 'Fleet Management', label: 'Fleet Management' },
+    { value: 'Electric Vehicles', label: 'Electric Vehicles' },
+
+
     { value: 'Cyber Security', label: 'Cyber Security' },
+    { value: 'Network Security', label: 'Network Security' },
+    { value: 'Ransomware', label: 'Ransomware' },
+
     { value: 'Travel Tech', label: 'Travel Tech' }
 
   ];

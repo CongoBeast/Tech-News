@@ -71,6 +71,11 @@ function ArticleEntry() {
     { value: 'Wellness', label: 'Wellness' },
     { value: 'Lifestyle', label: 'Lifestyle' },
 
+    { value: '5G', label: '5G' },
+    { value: 'Network', label: 'Network' },
+    { value: 'Telecom', label: 'Telecom' },
+    { value: 'Space', label: 'Space' },
+    { value: 'Communication', label: 'Communication' },
 
     { value: 'Manufacturing', label: 'Manufacturing' },
     { value: 'Chips', label: 'Chips' },

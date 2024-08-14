@@ -11,6 +11,7 @@ function RegionArticles() {
   const weekNumber = today.toLocaleDateString('en-US', { week: 'numeric' });
   const monthString = today.toLocaleDateString('en-US', { month: 'long' });
   const year = today.getFullYear();
+  const [filter, setFilter] = useState('thisMonth');
 
   const [articles, setArticles] = useState([]);
   const { region } = useParams();
@@ -26,6 +27,7 @@ function RegionArticles() {
   const handleCloseModal = () => setShowModal(false);
 
   const handlePeriodChange = (month, week, year) => {
+    setFilter('all')
     setSelectedMonth(month);
     setSelectedWeek(week);
     setSelectedYear(year);

@@ -28,7 +28,7 @@ function FundingEntry() {
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
 
- const options = [
+  const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
     { value: 'Solar', label: 'Solar' },
     { value: 'Clean Energy', label: 'Clean Energy' },
@@ -46,11 +46,6 @@ function FundingEntry() {
     { value: 'Wellness', label: 'Wellness' },
     { value: 'Lifestyle', label: 'Lifestyle' },
 
-    { value: '5G', label: '5G' },
-    { value: 'Network', label: 'Network' },
-    { value: 'Telecom', label: 'Telecom' },
-    { value: 'Space', label: 'Space' },
-    { value: 'Communication', label: 'Communication' },
 
     { value: 'Manufacturing', label: 'Manufacturing' },
     { value: 'Chips', label: 'Chips' },
@@ -111,6 +106,12 @@ function FundingEntry() {
     { value: 'BNPL', label: 'BNPL' },
     { value: 'Digital Banking', label: 'Digital Banking' },
     { value: 'Investing', label: 'Investing' },
+
+    { value: '5G', label: '5G' },
+    { value: 'Network', label: 'Network' },
+    { value: 'Telecom', label: 'Telecom' },
+    { value: 'Space', label: 'Space' },
+    { value: 'Communication', label: 'Communication' },
 
 
     { value: 'Cloud computing', label: 'Cloud computing' },
@@ -508,11 +509,11 @@ function FundingEntry() {
           </Col>
 
           <Col md={4}>
-            <Form.Group controlId="date" className="mb-3">
+            <Form.Group controlId="dateFounding" className="mb-3">
               <Form.Label>Founding Date</Form.Label>
               <Form.Control
                 type="date"
-                name="date"
+                name="dateFounding"
                 value={fundingData.dateFounded}
                 onChange={handleChange}
               />
@@ -555,11 +556,11 @@ function FundingEntry() {
           </Col>
           
           <Col md={4}>
-            <Form.Group controlId="date" className="mb-3">
+            <Form.Group controlId="dateFunding" className="mb-3">
               <Form.Label>Funding Date</Form.Label>
               <Form.Control
                 type="date"
-                name="date"
+                name="dateFunding"
                 value={fundingData.date}
                 onChange={handleChange}
               />

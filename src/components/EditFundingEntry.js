@@ -34,12 +34,12 @@ function EditFundingEntry() {
 
   // Adding funding rounds
   const [fundingRounds, setFundingRounds] = useState([
-    { dateFounded: '', fundingType: '', amount: '' }
+    { roundDate: '', fundingType: '', amount: '' }
   ]);
 
   const handleDateChange = (index, value) => {
     const updatedRounds = [...fundingRounds];
-    updatedRounds[index].dateFounded = value;
+    updatedRounds[index].roundDate = value;
     setFundingRounds(updatedRounds);
   };
 
@@ -56,7 +56,7 @@ function EditFundingEntry() {
   };
 
   const handleAddRound = () => {
-    setFundingRounds([...fundingRounds, { dateFounded: '', fundingType: '', amount: '' }]);
+    setFundingRounds([...fundingRounds, { dateFunded: '', fundingType: '', amount: '' }]);
   };
   // Adding funding rounds
   
@@ -190,15 +190,24 @@ function EditFundingEntry() {
       });
   };
 
+      // console.log(selectedEntry)
+      
+
+      // console.log(newRounds)
+
       const handleEditSubmit = (e) => {
+
+        var newRounds = [...fundingRounds , selectedEntry.rounds]
 
         const updatedEntry = {
           ...selectedEntry,
           founders: selectedItems.map(item => item.value),
           backers: selectedBackers.map(item => item.value),
           keyWords: selectedIndustry.map(item => item.value),
-          rounds: fundingRounds.map(item => item.value), // Add selected founders to the entry
+          rounds: newRounds, // Add selected founders to the entry
         };
+
+        console.log(updatedEntry)
     
         e.preventDefault();
         axios.post('https://tech-news-backend.onrender.com/update-funding-entry', updatedEntry)
@@ -405,7 +414,7 @@ function EditFundingEntry() {
                             <Form.Label>Date Funded</Form.Label>
                             <Form.Control
                             type="date"
-                            value={round.dateFounded}
+                            value={round.dateFunded}
                             onChange={(e) => handleDateChange(index, e.target.value)}
                             />
                         </Form.Group>

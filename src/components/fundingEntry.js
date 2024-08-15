@@ -145,6 +145,10 @@ function FundingEntry() {
 
   ];
 
+  const [fundingRounds, setFundingRounds] = useState([
+    { dateFunded: '', fundingType: '', amount: '' }
+  ]);
+
   const [selectedItems, setSelectedItems] = useState([]);
   const handleKeyWordChange = (selectedOptions) => {
     setSelectedItems(selectedOptions || []);
@@ -178,7 +182,8 @@ function FundingEntry() {
     month: '',
     year: '',
     username: userString,
-    keyWords: []
+    keyWords: [],
+    rounds: []
   });
 
   useEffect(() => {
@@ -192,6 +197,8 @@ function FundingEntry() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // console.log(name)
 
     if (name === 'date') {
       const selectedDate = new Date(value);
@@ -211,6 +218,11 @@ function FundingEntry() {
     }
   };
 
+  // 2 , 13 ,10
+  var roundData = {'roundDate': fundingData.date , 'fundingType': fundingData.type , 'amount': fundingData.size }
+
+  // console.log(roundData)
+
   const handlePaste = async (e, name) => {
     const text = await navigator.clipboard.readText();
     setFundingData({ ...fundingData, [name]: text });
@@ -221,7 +233,9 @@ function FundingEntry() {
     setLoading(true);
     setLoadingMessage('Submitting...');
 
-    const dataToSubmit = { ...fundingData, keyWords: selectedItems.map(item => item.value) };
+    const dataToSubmit = { ...fundingData, keyWords: selectedItems.map(item => item.value) , rounds: roundData };
+
+    console.log(dataToSubmit)
 
     axios.post('https://tech-news-backend.onrender.com/submit-funding-news',  dataToSubmit)
       .then((response) => {
@@ -244,7 +258,8 @@ function FundingEntry() {
           year: '',
           username: userString,
           dateFounded: '',
-          keyWords: []
+          keyWords: [],
+          rounds: []
         });
         navigate('/admin');
       })
@@ -508,7 +523,7 @@ function FundingEntry() {
             </Form.Group>
           </Col>
 
-          <Col md={4}>
+          {/* <Col md={4}>
             <Form.Group controlId="dateFounding" className="mb-3">
               <Form.Label>Founding Date</Form.Label>
               <Form.Control
@@ -518,7 +533,7 @@ function FundingEntry() {
                 onChange={handleChange}
               />
             </Form.Group>
-          </Col>
+          </Col> */}
         </Row>
 
         <Row>
@@ -560,7 +575,7 @@ function FundingEntry() {
               <Form.Label>Funding Date</Form.Label>
               <Form.Control
                 type="date"
-                name="dateFunding"
+                name="date"
                 value={fundingData.date}
                 onChange={handleChange}
               />

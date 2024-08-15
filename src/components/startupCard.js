@@ -9,7 +9,12 @@ function StartupCard() {
   const navigate = useNavigate();
   const startup = location.state?.startup;
 
+
   const [similarStartups, setSimilarStartups] = React.useState([]);
+  const [numberOfRounds, setNumberofRounds] = React.useState();
+  const [totalFundingRaised, setTotalFundingRaised] = React.useState();
+
+
 
   const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
 
@@ -22,6 +27,8 @@ function StartupCard() {
     if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`;
     return `$${(value / 1e6).toFixed(1)}M`;
   };
+
+  // console.log(startup)
 
   React.useEffect(() => {
     if (startup) {
@@ -40,6 +47,20 @@ function StartupCard() {
   const handleCardClick = (similarStartup) => {
     navigate(`/startup/${similarStartup._id}`, { state: { startup: similarStartup } });
   };
+
+  // Calculate the number of funding rounds
+  // console.log(startup)
+    if(startup.rounds){
+      setNumberofRounds(startup.rounds.length)
+      }
+
+  // Calculate the total funding raised
+  if(startup.rounds){
+    startup.rounds.reduce((total, round) => {
+      setTotalFundingRaised(total + parseInt(round.amount, 10)) // Convert string to number and sum up
+    }, 0);
+  }
+  
 
   // console.log(startup)
 
@@ -70,7 +91,7 @@ function StartupCard() {
       <div className="card mb-3" style={{ borderRadius: '15px', overflow: 'hidden' }}>
         <div className="row no-gutters">
           <div className="col-md-4">
-            <img src={startup.imageLink} className="card-img aspect-ratio" alt="founder" style={{ borderRadius: '15px 0 0 15px', height: '50%' }} />
+            <img src={startup.imageLink} className="card-img aspect-ratio" alt="founder" style={{ borderRadius: '15px 0 0 15px', height: '50%', minWidth: '200px' }} />
           </div>
           <div className="col-md-8">
             <div className="card-body">
@@ -87,7 +108,7 @@ function StartupCard() {
               {/* {startup.keyWords && <p>{startup.keyWords}</p>} */}
 
               <Row>
-                <Col md={3} className='align-items-center m-4'>
+                <Col md={2} className='align-items-center m-2'>
                   <Card style={{ background: '#a2c1f5' , color: 'Black' }}>
                     <Card.Body>
                       <Card.Title>{formatMillions(startup.size)}</Card.Title>
@@ -96,14 +117,34 @@ function StartupCard() {
                   </Card>
                 </Col>
 
-                <Col md={3} className='align-items-center m-4'>
-                  <Card style={{ background: '#f5b9a2' , color: 'Black' }}>
+                <Col md={2} className='align-items-center m-2'>
+                  <Card style={{ background: '#f5b9a2' , color: 'Black' ,width: '7rem'  }}>
                     <Card.Body>
                       <Card.Title>{startup.date}</Card.Title>
                       <Card.Text style={{ fontSize: '0.8rem' }} >Round date</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
+
+                {startup.rounds > 1 && <Col md={2} className='align-items-center m-2'>
+                  <Card style={{ background: '#f5b9a2' , color: 'Black' ,width: '7rem'  }}>
+                    <Card.Body>
+                      <Card.Title>{formatMillions(totalFundingRaised)}</Card.Title>
+                      <Card.Text style={{ fontSize: '0.8rem' }} >Total funding raised</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                }
+
+                {startup.rounds > 1 && <Col md={2} className='align-items-center m-2'>
+                  <Card style={{ background: '#f5b9a2' , color: 'Black' ,width: '7rem' }}>
+                    <Card.Body>
+                      <Card.Title>{numberOfRounds}</Card.Title>
+                      <Card.Text style={{ fontSize: '0.8rem' }} >Funding rounds</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                }
 
               </Row>
 

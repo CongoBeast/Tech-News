@@ -34,6 +34,12 @@ function Sidebar() {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     navigate('/home'); // Redirect to home after logout
+    toggleSidebar(); // Close the sidebar after logout
+  };
+
+  const handleNavClick = (path) => {
+    navigate(path);
+    toggleSidebar(); // Close the sidebar when a navigation item is clicked
   };
 
   return (
@@ -43,7 +49,7 @@ function Sidebar() {
       className="flex-column d-none d-lg-block sidebar"
     >
       <Navbar.Brand as={Link} to="/">
-        <img src="https://github.com/CongoBeast/Tech-News/blob/master/public/cordelia.png?raw=true" 
+        <img src="https://github.com/CongoBeast/Tech-News/blob/master/public/cordelia-side-nav.png?raw=true" 
         alt="Imat Tech Logo"
           style={{  width: "160px" , height: "80px" }}
           className="d-flex align-items-center"
@@ -55,44 +61,40 @@ function Sidebar() {
       <Navbar.Collapse id="basic-navbar-nav" className={!isOpen && "d-none d-lg-block"}>
         <Nav className="flex-column gap-3" style={{ padding: "2rem", textAlign: "right" }}>
           <Button
-            as={Link}
-            to="/home"
             variant={isLinkActive("/home") ? "primary" : "outline-light"}
             className="text-left d-flex align-items-center"
             style={{ marginBottom: "1rem" }}
+            onClick={() => handleNavClick('/home')}
           >
             <FaHome />
             <span style={{ marginLeft: "1rem" }}>Home</span>
           </Button>
 
           <Button
-            as={Link}
-            to="/funding"
             variant={isLinkActive("/funding") ? "primary" : "outline-light"}
             className="text-left d-flex align-items-center"
             style={{ marginBottom: "1rem" }}
+            onClick={() => handleNavClick('/funding')}
           >
             <FaNewspaper />
             <span style={{ marginLeft: "1rem" }}>Funding News</span>
           </Button>
 
           <Button
-            as={Link}
-            to="/trends"
             variant={isLinkActive("/trends") ? "primary" : "outline-light"}
             className="text-left d-flex align-items-center"
             style={{ marginBottom: "1rem" }}
+            onClick={() => handleNavClick('/trends')}
           >
             <BsFillFileBarGraphFill />
             <span style={{ marginLeft: "1rem" }}>Trends</span>
           </Button>
 
           <Button
-            as={Link}
-            to="/about"
             variant={isLinkActive("/about") ? "primary" : "outline-light"}
             className="text-left d-flex align-items-center"
             style={{ marginBottom: "1rem" }}
+            onClick={() => handleNavClick('/about')}
           >
             <IoIosInformationCircle />
             <span style={{ marginLeft: "1rem" }}>About Us</span>
@@ -101,11 +103,10 @@ function Sidebar() {
           {isLoggedIn && (
             <>
               <Button
-                as={Link}
-                to="/admin"
                 variant={isLinkActive("/admin") ? "primary" : "outline-light"}
                 className="text-left d-flex align-items-center"
                 style={{ marginBottom: "1rem" }}
+                onClick={() => handleNavClick('/admin')}
               >
                 <IoIosInformationCircle />
                 <span style={{ marginLeft: "1rem" }}>Admin</span>

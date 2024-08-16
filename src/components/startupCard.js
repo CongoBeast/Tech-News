@@ -10,9 +10,15 @@ function StartupCard() {
   const startup = location.state?.startup;
 
 
+
   const [similarStartups, setSimilarStartups] = React.useState([]);
   const [numberOfRounds, setNumberofRounds] = React.useState();
   const [totalFundingRaised, setTotalFundingRaised] = React.useState();
+
+  const [startupRounds, setStartupRounds] = React.useState([[]]);
+
+  const [dataArray, setDataArray] = React.useState([[]]);
+
 
 
 
@@ -41,6 +47,9 @@ function StartupCard() {
       ).slice(0, 3); // Get 3 similar companies
 
       setSimilarStartups(filteredStartups);
+      // var updatedArray = []
+      setStartupRounds(startup.rounds)
+      console.log(startupRounds)
     }
   }, [startup]);
 
@@ -48,20 +57,16 @@ function StartupCard() {
     navigate(`/startup/${similarStartup._id}`, { state: { startup: similarStartup } });
   };
 
-  // Calculate the number of funding rounds
-  // console.log(startup)
-    if(startup.rounds){
-      setNumberofRounds(startup.rounds.length)
-      }
 
-  // Calculate the total funding raised
-  if(startup.rounds){
-    startup.rounds.reduce((total, round) => {
-      setTotalFundingRaised(total + parseInt(round.amount, 10)) // Convert string to number and sum up
-    }, 0);
-  }
   
-
+    // Calculate the total funding raised
+    // const totalFunding = startupRounds.reduce((total, round) => {
+    //   return total + parseInt(round.amount, 10); // Convert string to number and sum up
+    // }, 0);
+  
+    // Update state with the total funding raised
+    // setTotalFundingRaised(totalFunding);
+  
   // console.log(startup)
 
   if (!startup) {
@@ -108,8 +113,8 @@ function StartupCard() {
               {/* {startup.keyWords && <p>{startup.keyWords}</p>} */}
 
               <Row>
-                <Col md={2} className='align-items-center m-2'>
-                  <Card style={{ background: '#a2c1f5' , color: 'Black' }}>
+                <Col md={2} xs={'auto'} className='align-items-center m-2'>
+                  <Card style={{ background: '#a2c1f5' , color: 'Black', width: '7rem' }}>
                     <Card.Body>
                       <Card.Title>{formatMillions(startup.size)}</Card.Title>
                       <Card.Text style={{ fontSize: '0.8rem' }}>Latest round size</Card.Text>
@@ -117,7 +122,7 @@ function StartupCard() {
                   </Card>
                 </Col>
 
-                <Col md={2} className='align-items-center m-2'>
+                <Col md={2} xs={'auto'} className='align-items-center m-2'>
                   <Card style={{ background: '#f5b9a2' , color: 'Black' ,width: '7rem'  }}>
                     <Card.Body>
                       <Card.Title>{startup.date}</Card.Title>
@@ -126,10 +131,10 @@ function StartupCard() {
                   </Card>
                 </Col>
 
-                {startup.rounds > 1 && <Col md={2} className='align-items-center m-2'>
+                {/* {startup.rounds > 1 && <Col md={2} className='align-items-center m-2'>
                   <Card style={{ background: '#f5b9a2' , color: 'Black' ,width: '7rem'  }}>
                     <Card.Body>
-                      <Card.Title>{formatMillions(totalFundingRaised)}</Card.Title>
+                      <Card.Title>{formatMillions(totalFunding)}</Card.Title>
                       <Card.Text style={{ fontSize: '0.8rem' }} >Total funding raised</Card.Text>
                     </Card.Body>
                   </Card>
@@ -139,12 +144,12 @@ function StartupCard() {
                 {startup.rounds > 1 && <Col md={2} className='align-items-center m-2'>
                   <Card style={{ background: '#f5b9a2' , color: 'Black' ,width: '7rem' }}>
                     <Card.Body>
-                      <Card.Title>{numberOfRounds}</Card.Title>
+                      <Card.Title>{startupRounds.length}</Card.Title>
                       <Card.Text style={{ fontSize: '0.8rem' }} >Funding rounds</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                }
+                } */}
 
               </Row>
 

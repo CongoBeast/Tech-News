@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col, Card, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
@@ -31,6 +31,7 @@ function FundingAnalysis() {
   const [treemapTags , setTreemapTags] = useState([])
   // const [treemapTags , setTreemapTags] = useState([])
 
+  const fundingTypes = ['Series A', 'Series B', 'Series C' , 'Series D' ,  'Pre-Seed', 'Seed', 'Pre-Series A' , 'Other'];
 
   useEffect(() => {
     fetchFundingData();
@@ -204,8 +205,100 @@ function FundingAnalysis() {
   const [showModal, setShowModal] = useState(false);
   const [treemapData, setTreemapData] = useState(null);
 
+  const result = {};
+
+  // Initialize result object with empty arrays for each type
+  fundingTypes.forEach(type => {
+    result[type] = Array(12).fill(0); // Initialize with zeros for each month
+  });
+
+  const monthIndexMap = {
+    "January": 0,
+    "February": 1,
+    "March": 2,
+    "April": 3,
+    "May": 4,
+    "June": 5,
+    "July": 6,
+    "August": 7,
+    "September": 8,
+    "October": 9,
+    "November": 10,
+    "December": 11
+  };
+
+  // Populate the result object with actual amounts
+  fundingData.forEach(startup => {
+    const { type, size, month } = startup;
+  
+    if (result[type]) {
+      const amount = parseFloat(size); // Convert the 'size' string to a number
+      const monthIndex = monthIndexMap[month]; // Get the corresponding month index
+  
+      if (monthIndex !== undefined) {
+        result[type][monthIndex] += amount; // Add the amount to the correct month
+      }
+    }
+  });
+
+console.log(result);
+
 
   // console.log(treemapType)
+  const [selectedFundingType, setSelectedFundingType] = useState('Series A');
+
+  const testData = {
+    'Series A': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+    'Series B': [15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125],
+    'Series C': [5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115],
+    'Series D': [20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130],
+    'Pre-seed': [8, 18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118],
+  };
+
+  const data = {
+    labels: [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ],
+    datasets: [
+      {
+        label: `${selectedFundingType} Funding`,
+        // data: testData[selectedFundingType],
+        data: result[selectedFundingType],
+        fill: false,
+        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: 'rgba(75,192,192,0.1)',
+        tension: 0.4, // This makes the line smooth
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: function (value) {
+            return value >= 1000
+              ? '$' + (value / 100000000).toFixed(1) + 'B'
+              : '$' + value + 'M';
+          },
+        },
+        grid: {
+          display: false, // Remove grid lines
+        },
+      },
+      x: {
+        grid: {
+          display: false, // Remove grid lines
+        },
+      }
+    },
+  };
+
+  const handleSelect = (type) => {
+    setSelectedFundingType(type);
+  };
 
 
   const handleCardClick = () => {
@@ -239,7 +332,12 @@ function FundingAnalysis() {
           <Row className="mb-4 justify-content-center">
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">{year || 'Year'}</Dropdown.Toggle>
+                <Dropdown.Toggle           
+                variant="outline-secondary"
+                id="dropdown-basic"
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }}>
+                  {year || 'Year'}
+                </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setYear('2021')}>2021</Dropdown.Item>
                   <Dropdown.Item onClick={() => setYear('2022')}>2022</Dropdown.Item>
@@ -250,7 +348,12 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">{month || 'Month'}</Dropdown.Toggle>
+              <Dropdown.Toggle           
+                variant="outline-secondary"
+                id="dropdown-basic"
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }}>
+                  {month || 'Month'}
+                </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(month => (
                     <Dropdown.Item key={month} onClick={() => setMonth(month)}>{month}</Dropdown.Item>
@@ -260,7 +363,11 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">{region || 'Region'}</Dropdown.Toggle>
+              <Dropdown.Toggle           
+                variant="outline-secondary"
+                id="dropdown-basic"
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }}>
+                  {region || 'Region'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['america', 'europe', 'asia', 'africa', 'middleeast'].map(region => (
                     <Dropdown.Item key={region} onClick={() => setRegion(region)}>{region}</Dropdown.Item>
@@ -270,7 +377,11 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">{tag || 'Tag'}</Dropdown.Toggle>
+              <Dropdown.Toggle           
+                variant="outline-secondary"
+                id="dropdown-basic"
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }}>
+                  {tag || 'Tag'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['AI', 'Blockchain', 'IoT', 'Aerospace', 'Climate', 'Energy', 'Security', 'Military', 'MotorVehicles', 'BioTech', 'Agric'].map(tag => (
                     <Dropdown.Item key={tag} onClick={() => setTag(tag)}>{tag}</Dropdown.Item>
@@ -280,7 +391,11 @@ function FundingAnalysis() {
             </Col>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="secondary">{type || 'Type'}</Dropdown.Toggle>
+              <Dropdown.Toggle           
+                variant="outline-secondary"
+                id="dropdown-basic"
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }}>
+                  {type || 'Type'}</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {['Series A', 'Series B', 'Pre-Seed', 'Seed', 'Pre-Series A' , 'Other'].map(type => (
                     <Dropdown.Item key={type} onClick={() => setType(type)}>{type}</Dropdown.Item>
@@ -291,7 +406,7 @@ function FundingAnalysis() {
           </Row>
 
           <Row className='justify-content-center'>
-            <Col md={2} className="mb-4">
+            <Col md={2}  xs={'auto'} className="mb-4">
               <Card  style={{ background: 'linear-gradient(to right, #2f2f33, #2575fc)', color: 'white' }}>
                 <Card.Body>
                   <Card.Title style={{ fontSize: '1.8rem' }}>{formatMillions(topFunding.highestFunding)}</Card.Title>
@@ -299,7 +414,7 @@ function FundingAnalysis() {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={2} className="mb-4">
+            <Col md={2}  xs={'auto'} className="mb-4">
               <Card  style={{ background: 'linear-gradient(to right, #2575fc, #420f41', color: 'white' }}>
                 <Card.Body>
                   <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topContinent}</Card.Title>
@@ -307,7 +422,7 @@ function FundingAnalysis() {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={2} className="mb-4">
+            <Col md={2}  xs={'auto'} className="mb-4">
               <Card  style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
                 <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topTag}</Card.Title>
@@ -315,7 +430,7 @@ function FundingAnalysis() {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={2} className="mb-4">
+            <Col md={2}  xs={'auto'} className="mb-4">
               <Card  style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
                 <Card.Title style={{ fontSize: '1.8rem' }}>{topFunding.topType}</Card.Title>
@@ -323,7 +438,7 @@ function FundingAnalysis() {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={2} className="mb-4">
+            <Col md={2} xs={'auto'} className="mb-4">
               <Card style={{ background: 'linear-gradient(to right, #6a11cb, #2575fc)', color: 'white' }}>
                 <Card.Body>
                 <Card.Title style={{ fontSize: '1.8rem' }}>{filterCount}</Card.Title>
@@ -332,6 +447,45 @@ function FundingAnalysis() {
               </Card>
             </Col>
           </Row>
+
+
+          <div>
+            
+            
+            <Card className='m-2'>
+              {/* <DropdownButton
+                id="dropdown-basic-button"
+                title={ "Select Funding Type" || selectedFundingType}
+                onSelect={handleSelect}
+              >
+                
+                {fundingTypes.map(type => (
+                      <Dropdown.Item eventKey={type}>{type}</Dropdown.Item>
+                    ))}
+
+              </DropdownButton> */}
+              <Dropdown>
+                  <Dropdown.Toggle
+                    id="dropdown-basic-button"
+                    variant="outline-secondary"
+                    style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }}
+                  >
+                  { "Select Funding Type" || selectedFundingType}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                  {fundingTypes.map(type => (
+                        <Dropdown.Item onClick={()=> handleSelect(type)} eventKey={type}>{type}</Dropdown.Item>
+                      ))}
+                  </Dropdown.Menu>
+                  
+              </Dropdown>
+                <Card.Body>
+                  {/* <Card.Title>Funding by Tag</Card.Title> */}
+              <Line data={data} options={options} />
+              </Card.Body>
+            </Card>
+
+          </div>
 
 
           <Row>

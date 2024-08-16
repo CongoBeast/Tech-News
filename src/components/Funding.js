@@ -35,7 +35,7 @@ function Funding() {
         }
       })
         .then(response => {
-          setFundingData(response.data);
+          setFundingData(response.data.reverse());
           localStorage.setItem('fundingData', JSON.stringify(response.data));
         })
         .catch(error => {

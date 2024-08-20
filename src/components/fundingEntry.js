@@ -30,6 +30,7 @@ function FundingEntry() {
 
   const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'SAF', label: 'SAF' },
     { value: 'Solar', label: 'Solar' },
     { value: 'Clean Energy', label: 'Clean Energy' },
     { value: 'Sustainability', label: 'Sustainability' },
@@ -60,7 +61,13 @@ function FundingEntry() {
     { value: 'Health data analytics', label: 'Health data analytics' },
     { value: 'Genomics', label: 'Genomics' },
     { value: 'Digital health', label: 'Digital health' },
+    { value: 'Bio Engineering', label: 'Bio Engineering' },
+    { value: 'Cancer', label: 'Cancer' },
+    { value: 'Brain Health', label: 'Brain Health' },
 
+    { value: 'Construction', label: 'Construction' },
+    { value: 'Charging', label: 'Charging' },
+  
 
     { value: 'Education', label: 'Education' },
 
@@ -86,6 +93,12 @@ function FundingEntry() {
     { value: 'Clothing', label: 'Clothing' },
     { value: 'Fashion', label: 'Fashion' },
     { value: 'Restaurant', label: 'Restaurant' },
+    { value: 'Adtech', label: 'Adtech' },
+    { value: 'Marketing', label: 'Marketing' },
+
+    { value: 'Space Tech', label: 'Space Tech' },
+    
+    
 
     { value: 'RealEstate', label: 'RealEstate' },
 
@@ -141,6 +154,7 @@ function FundingEntry() {
     { value: 'Network Security', label: 'Network Security' },
     { value: 'Ransomware', label: 'Ransomware' },
 
+    { value: 'Tourism', label: 'Tourism' },
     { value: 'Travel Tech', label: 'Travel Tech' }
 
   ];

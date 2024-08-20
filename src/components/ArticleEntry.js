@@ -55,6 +55,7 @@ function ArticleEntry() {
 
   const options = [
     { value: 'Hydrogen', label: 'Hydrogen' },
+    { value: 'SAF', label: 'SAF' },
     { value: 'Solar', label: 'Solar' },
     { value: 'Clean Energy', label: 'Clean Energy' },
     { value: 'Sustainability', label: 'Sustainability' },
@@ -85,7 +86,13 @@ function ArticleEntry() {
     { value: 'Health data analytics', label: 'Health data analytics' },
     { value: 'Genomics', label: 'Genomics' },
     { value: 'Digital health', label: 'Digital health' },
+    { value: 'Bio Engineering', label: 'Bio Engineering' },
+    { value: 'Cancer', label: 'Cancer' },
+    { value: 'Brain Health', label: 'Brain Health' },
 
+    { value: 'Construction', label: 'Construction' },
+    { value: 'Charging', label: 'Charging' },
+  
 
     { value: 'Education', label: 'Education' },
 

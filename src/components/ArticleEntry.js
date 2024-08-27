@@ -89,6 +89,8 @@ function ArticleEntry() {
     { value: 'Bio Engineering', label: 'Bio Engineering' },
     { value: 'Cancer', label: 'Cancer' },
     { value: 'Brain Health', label: 'Brain Health' },
+    { value: 'Mental Health', label: 'Mental Health' },
+    
 
     { value: 'Construction', label: 'Construction' },
     { value: 'Charging', label: 'Charging' },
@@ -122,6 +124,8 @@ function ArticleEntry() {
     { value: 'Marketing', label: 'Marketing' },
 
     { value: 'Space Tech', label: 'Space Tech' },
+    { value: 'Satellite', label: 'Satellite' },
+    
     
     
 
@@ -170,6 +174,7 @@ function ArticleEntry() {
     { value: 'Millitary', label: 'Millitary' },
 
     { value: 'Battery', label: 'Battery' },
+    { value: 'Lithium', label: 'Lithium' },
     { value: 'Charging stations', label: 'Charging stations' },
     { value: 'Fleet Management', label: 'Fleet Management' },
     { value: 'Electric Vehicles', label: 'Electric Vehicles' },
@@ -179,6 +184,7 @@ function ArticleEntry() {
     { value: 'Network Security', label: 'Network Security' },
     { value: 'Ransomware', label: 'Ransomware' },
 
+    { value: 'Air Travel', label: 'Air Travel' },
     { value: 'Travel Tech', label: 'Travel Tech' }
 
   ];

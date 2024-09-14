@@ -72,6 +72,12 @@ function ArticleEntry() {
     { value: 'Wellness', label: 'Wellness' },
     { value: 'Lifestyle', label: 'Lifestyle' },
 
+    { value: 'Legal', label: 'Legal' },
+    { value: 'Litigation', label: 'Litigation' },
+    { value: 'Regulation', label: 'Regulation' },
+    { value: 'Partnership', label: 'Partnership' },
+
+    { value: 'Cross Border Finance', label: 'Cross Border Finance' },
 
     { value: 'Manufacturing', label: 'Manufacturing' },
     { value: 'Chips', label: 'Chips' },
@@ -124,6 +130,7 @@ function ArticleEntry() {
     { value: 'Marketing', label: 'Marketing' },
 
     { value: 'Space Tech', label: 'Space Tech' },
+    { value: 'Space Craft', label: 'Space Craft' },
     { value: 'Satellite', label: 'Satellite' },
     
     
@@ -185,6 +192,8 @@ function ArticleEntry() {
     { value: 'Ransomware', label: 'Ransomware' },
 
     { value: 'Air Travel', label: 'Air Travel' },
+    { value: 'Tourism', label: 'Tourism' },
+    { value: 'IoT', label: 'IoT' },
     { value: 'Travel Tech', label: 'Travel Tech' }
 
   ];

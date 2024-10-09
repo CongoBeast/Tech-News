@@ -57,6 +57,13 @@ function ArticleEntry() {
     { value: 'Hydrogen', label: 'Hydrogen' },
     { value: 'SAF', label: 'SAF' },
     { value: 'Solar', label: 'Solar' },
+    { value: 'Fossil Fuels', label: 'Fossil Fuels' },
+    { value: 'Oil', label: 'Oil' },
+    { value: 'Emissions', label: 'Emissions' },
+    { value: 'Nuclear', label: 'Nuclear' },
+    { value: 'ESG', label: 'ESG' },
+    { value: 'Pollution', label: 'Pollution' },
+    
     { value: 'Clean Energy', label: 'Clean Energy' },
     { value: 'Sustainability', label: 'Sustainability' },
     { value: 'Green Tech', label: 'Green Tech' },

@@ -83,6 +83,11 @@ function ArticleEntry() {
     { value: 'Litigation', label: 'Litigation' },
     { value: 'Regulation', label: 'Regulation' },
     { value: 'Partnership', label: 'Partnership' },
+    { value: 'Launch', label: 'Launch' },
+    { value: 'Acquisition', label: 'Acquisition' },
+    { value: 'Contract News', label: 'Contract News' },
+    { value: 'Motor Vehicles', label: 'Motor Vehicles' },
+    
 
     { value: 'Cross Border Finance', label: 'Cross Border Finance' },
 
@@ -90,6 +95,8 @@ function ArticleEntry() {
     { value: 'Chips', label: 'Chips' },
     { value: 'Semi-conductors', label: 'Semi-conductors' },
     { value: 'Chemistry', label: 'Chemistry' },
+
+    
 
     { value: 'Health', label: 'Health' },
     { value: 'Tele Health', label: 'Tele Health' },

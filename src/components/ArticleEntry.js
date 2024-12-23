@@ -339,7 +339,9 @@ function ArticleEntry() {
   
   if(summaryResult.length > 0)
     // console.log(summaryResult)
-    geminiData = JSON.parse(summaryResult.substring(7, summaryResult.length - 3))
+    // geminiData = JSON.parse(summaryResult.substring(7, summaryResult.length - 3))
+    geminiData = summaryResult
+  
 
 
   const [isTitleClicked, setIsTitleClicked] = useState(false);
